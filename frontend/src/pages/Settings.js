@@ -71,7 +71,6 @@ function Settings() {
   const [rolePermissions, setRolePermissions] = useState(ROLE_PERMISSIONS);
   const [newUser, setNewUser] = useState({
     username: '',
-    email: '',
     password: '',
     role: 'depo'
   });
