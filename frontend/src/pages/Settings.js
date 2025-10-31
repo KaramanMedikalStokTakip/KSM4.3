@@ -108,11 +108,14 @@ function Settings() {
 
   const fetchUsers = async () => {
     try {
+      const response = await axios.get(`${API}/users`);
+      setUsers(response.data);
+    } catch (error) {
+      console.error('Users fetch error:', error);
+      // Fallback to current user if API fails
       setUsers([
         { id: user.id, username: user.username, email: user.email, role: user.role }
       ]);
-    } catch (error) {
-      console.error('Users fetch error:', error);
     }
   };
 
