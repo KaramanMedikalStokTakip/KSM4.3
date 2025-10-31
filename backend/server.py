@@ -219,6 +219,15 @@ async def login(credentials: UserLogin):
     token = create_access_token({"sub": user_obj.id})
     return Token(access_token=token, token_type="bearer", user=user_obj)
 
+@api_router.get("/users", response_model=List[User])
+async def get_users(current_user: User = Depends(get_current_user)):
+    users = await db.users.find({}, {"_id": 0, "password": 0}).to_list(1000)
+    for u in users:
+        if isinstance(u["created_at"], str):
+            u["created_at"] = datetime.fromisoformat(u["created_at"])
+    return users
+
+
 # Product endpoints
 @api_router.post("/products", response_model=Product)
 async def create_product(product_data: ProductCreate, current_user: User = Depends(get_current_user)):
