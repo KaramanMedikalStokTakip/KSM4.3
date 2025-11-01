@@ -290,6 +290,272 @@ class BackendTester:
             self.log_result("Dashboard Connection", False, 
                           f"Connection error: {str(e)}")
             return False
+
+    def create_admin_user(self):
+        """Create an admin user for testing admin-only features"""
+        print("\n=== Creating Admin User ===")
+        
+        admin_user = {
+            "username": f"admin_{int(time.time())}",
+            "password": "AdminPass123!",
+            "role": "yönetici"
+        }
+        
+        try:
+            response = self.session.post(
+                f"{BACKEND_URL}/auth/register",
+                json=admin_user,
+                timeout=10
+            )
+            
+            if response.status_code != 200:
+                self.log_result("Admin User Creation", False, 
+                              f"Expected 200, got {response.status_code}", response.text)
+                return False, None
+            
+            self.log_result("Admin User Creation", True, 
+                          f"Admin user created: {admin_user['username']}")
+            return True, admin_user
+            
+        except requests.exceptions.RequestException as e:
+            self.log_result("Admin User Creation", False, 
+                          f"Connection error: {str(e)}")
+            return False, None
+
+    def login_as_admin(self, admin_credentials):
+        """Login as admin user"""
+        print("\n=== Admin Login ===")
+        
+        if not admin_credentials:
+            self.log_result("Admin Login", False, "No admin credentials available")
+            return False, None
+        
+        login_data = {
+            "username": admin_credentials["username"],
+            "password": admin_credentials["password"]
+        }
+        
+        try:
+            response = self.session.post(
+                f"{BACKEND_URL}/auth/login",
+                json=login_data,
+                timeout=10
+            )
+            
+            if response.status_code != 200:
+                self.log_result("Admin Login Status", False, 
+                              f"Expected 200, got {response.status_code}", response.text)
+                return False, None
+            
+            data = response.json()
+            admin_token = data["access_token"]
+            
+            self.log_result("Admin Login", True, 
+                          f"Admin login successful: {data['user']['username']}")
+            return True, admin_token
+            
+        except requests.exceptions.RequestException as e:
+            self.log_result("Admin Login Connection", False, 
+                          f"Connection error: {str(e)}")
+            return False, None
+
+    def test_customer_soft_delete(self):
+        """Test Customer Soft Delete functionality"""
+        print("\n=== Testing Customer Soft Delete ===")
+        
+        if not self.auth_token:
+            self.log_result("Customer Delete Auth", False, "No authentication token available")
+            return False
+        
+        # Step 1: Create a test customer
+        customer_data = {
+            "name": "Ahmet Yılmaz",
+            "phone": "05551234567",
+            "email": "ahmet@example.com",
+            "notes": "Test müşterisi"
+        }
+        
+        try:
+            # Create customer
+            response = self.session.post(
+                f"{BACKEND_URL}/customers",
+                json=customer_data,
+                timeout=10
+            )
+            
+            if response.status_code != 200:
+                self.log_result("Customer Creation", False, 
+                              f"Expected 200, got {response.status_code}", response.text)
+                return False
+            
+            customer = response.json()
+            customer_id = customer["id"]
+            
+            self.log_result("Customer Creation", True, 
+                          f"Customer created: {customer['name']} (ID: {customer_id})")
+            
+            # Step 2: Try to delete with non-admin user (should fail with 403)
+            delete_response = self.session.delete(
+                f"{BACKEND_URL}/customers/{customer_id}",
+                timeout=10
+            )
+            
+            if delete_response.status_code != 403:
+                self.log_result("Customer Delete Non-Admin", False, 
+                              f"Expected 403, got {delete_response.status_code}", delete_response.text)
+                return False
+            
+            self.log_result("Customer Delete Non-Admin", True, 
+                          "Non-admin user correctly denied access (403)")
+            
+            # Step 3: Create admin user and login
+            admin_success, admin_creds = self.create_admin_user()
+            if not admin_success:
+                return False
+            
+            login_success, admin_token = self.login_as_admin(admin_creds)
+            if not login_success:
+                return False
+            
+            # Step 4: Delete customer as admin
+            admin_headers = {"Authorization": f"Bearer {admin_token}"}
+            admin_delete_response = self.session.delete(
+                f"{BACKEND_URL}/customers/{customer_id}",
+                headers=admin_headers,
+                timeout=10
+            )
+            
+            if admin_delete_response.status_code != 200:
+                self.log_result("Customer Delete Admin", False, 
+                              f"Expected 200, got {admin_delete_response.status_code}", admin_delete_response.text)
+                return False
+            
+            self.log_result("Customer Delete Admin", True, 
+                          "Admin successfully deleted customer (200)")
+            
+            # Step 5: Verify customer is not in GET /customers list
+            customers_response = self.session.get(f"{BACKEND_URL}/customers", timeout=10)
+            
+            if customers_response.status_code != 200:
+                self.log_result("Customer List Check", False, 
+                              f"Expected 200, got {customers_response.status_code}", customers_response.text)
+                return False
+            
+            customers_list = customers_response.json()
+            deleted_customer_found = any(c["id"] == customer_id for c in customers_list)
+            
+            if deleted_customer_found:
+                self.log_result("Customer Soft Delete Verification", False, 
+                              "Deleted customer still appears in customer list")
+                return False
+            
+            self.log_result("Customer Soft Delete Verification", True, 
+                          "Deleted customer correctly filtered out from customer list")
+            
+            self.log_result("Customer Soft Delete", True, 
+                          "All customer soft delete tests passed")
+            return True
+            
+        except requests.exceptions.RequestException as e:
+            self.log_result("Customer Soft Delete Connection", False, 
+                          f"Connection error: {str(e)}")
+            return False
+
+    def test_product_price_comparison(self):
+        """Test Product Price Comparison endpoint"""
+        print("\n=== Testing Product Price Comparison ===")
+        
+        if not self.auth_token:
+            self.log_result("Price Comparison Auth", False, "No authentication token available")
+            return False
+        
+        # Step 1: Create a test product
+        product_data = {
+            "name": "Aspirin 500mg",
+            "barcode": f"123456789{int(time.time())}",
+            "quantity": 100,
+            "min_quantity": 10,
+            "brand": "Bayer",
+            "category": "İlaç",
+            "purchase_price": 15.50,
+            "sale_price": 25.00,
+            "description": "Ağrı kesici ilaç"
+        }
+        
+        try:
+            # Create product
+            response = self.session.post(
+                f"{BACKEND_URL}/products",
+                json=product_data,
+                timeout=10
+            )
+            
+            if response.status_code != 200:
+                self.log_result("Product Creation", False, 
+                              f"Expected 200, got {response.status_code}", response.text)
+                return False
+            
+            product = response.json()
+            product_id = product["id"]
+            
+            self.log_result("Product Creation", True, 
+                          f"Product created: {product['name']} (ID: {product_id})")
+            
+            # Step 2: Call price comparison endpoint
+            comparison_response = self.session.get(
+                f"{BACKEND_URL}/products/{product_id}/price-comparison",
+                timeout=10
+            )
+            
+            if comparison_response.status_code != 200:
+                self.log_result("Price Comparison Status", False, 
+                              f"Expected 200, got {comparison_response.status_code}", comparison_response.text)
+                return False
+            
+            try:
+                comparison_data = comparison_response.json()
+            except json.JSONDecodeError as e:
+                self.log_result("Price Comparison JSON", False, 
+                              "Invalid JSON response", str(e))
+                return False
+            
+            # Step 3: Verify required fields in response
+            required_fields = ["product_id", "product_name", "brand", "category", "current_price", "barcode"]
+            missing_fields = [field for field in required_fields if field not in comparison_data]
+            
+            if missing_fields:
+                self.log_result("Price Comparison Fields", False, 
+                              f"Missing required fields: {missing_fields}", comparison_data)
+                return False
+            
+            # Step 4: Verify data correctness
+            data_issues = []
+            if comparison_data["product_id"] != product_id:
+                data_issues.append(f"product_id mismatch: expected {product_id}, got {comparison_data['product_id']}")
+            if comparison_data["product_name"] != product_data["name"]:
+                data_issues.append(f"product_name mismatch: expected {product_data['name']}, got {comparison_data['product_name']}")
+            if comparison_data["brand"] != product_data["brand"]:
+                data_issues.append(f"brand mismatch: expected {product_data['brand']}, got {comparison_data['brand']}")
+            if comparison_data["category"] != product_data["category"]:
+                data_issues.append(f"category mismatch: expected {product_data['category']}, got {comparison_data['category']}")
+            if comparison_data["current_price"] != product_data["sale_price"]:
+                data_issues.append(f"current_price mismatch: expected {product_data['sale_price']}, got {comparison_data['current_price']}")
+            if comparison_data["barcode"] != product_data["barcode"]:
+                data_issues.append(f"barcode mismatch: expected {product_data['barcode']}, got {comparison_data['barcode']}")
+            
+            if data_issues:
+                self.log_result("Price Comparison Data", False, 
+                              f"Data validation issues: {data_issues}", comparison_data)
+                return False
+            
+            self.log_result("Price Comparison", True, 
+                          f"Price comparison endpoint working correctly. Product: {comparison_data['product_name']}, Price: {comparison_data['current_price']}")
+            return True
+            
+        except requests.exceptions.RequestException as e:
+            self.log_result("Price Comparison Connection", False, 
+                          f"Connection error: {str(e)}")
+            return False
     
     def run_all_tests(self):
         """Run all backend tests"""
