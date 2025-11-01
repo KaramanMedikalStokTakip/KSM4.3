@@ -142,6 +142,17 @@ function Customers() {
               <h3 className="font-semibold text-lg text-gray-800 mb-2">{customer.name}</h3>
               <p className="text-sm text-gray-600 mb-1">📞 {customer.phone}</p>
               {customer.email && <p className="text-sm text-gray-600 mb-1">✉️ {customer.email}</p>}
+              {customer.created_at && (
+                <p className="text-xs text-gray-400 mb-3">
+                  📅 {new Date(customer.created_at).toLocaleDateString('tr-TR', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  })}
+                </p>
+              )}
               <div className="mt-4 p-3 bg-blue-50 rounded-md">
                 <p className="text-sm text-gray-600">Toplam Harcama</p>
                 <p className="text-2xl font-bold text-blue-600">₺{customer.total_spent?.toFixed(2) || '0.00'}</p>
