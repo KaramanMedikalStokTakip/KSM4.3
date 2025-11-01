@@ -354,7 +354,13 @@ function Stock() {
               {product.image_url && (
                 <img src={product.image_url} alt={product.name} className="w-full h-40 object-cover rounded-md mb-3" />
               )}
-              <h3 className="font-semibold text-lg text-gray-800 mb-1">{product.name}</h3>
+              <h3 
+                className="font-semibold text-lg text-gray-800 mb-1 cursor-pointer hover:text-blue-600 transition-colors"
+                onClick={() => searchProductPrices(product)}
+                title="Fiyat karşılaştırması için tıklayın"
+              >
+                {product.name}
+              </h3>
               <p className="text-sm text-gray-500 mb-2">{product.brand} - {product.category}</p>
               <p className="text-xs text-gray-400 mb-3">{product.barcode}</p>
               {product.description && (
