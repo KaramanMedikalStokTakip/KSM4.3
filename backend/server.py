@@ -227,6 +227,22 @@ async def get_users(current_user: User = Depends(get_current_user)):
             u["created_at"] = datetime.fromisoformat(u["created_at"])
     return users
 
+@api_router.delete("/users/{user_id}")
+async def delete_user(user_id: str, current_user: User = Depends(get_current_user)):
+    # Prevent users from deleting themselves
+    if user_id == current_user.id:
+        raise HTTPException(status_code=400, detail="Cannot delete your own account")
+    
+    # Only admins can delete users
+    if current_user.role != "yönetici":
+        raise HTTPException(status_code=403, detail="Only administrators can delete users")
+    
+    result = await db.users.delete_one({"id": user_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="User not found")
+    return {"message": "User deleted successfully"}
+
+
 
 # Product endpoints
 @api_router.post("/products", response_model=Product)
