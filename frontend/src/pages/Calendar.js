@@ -200,7 +200,11 @@ function Calendar() {
         <CardContent>
           <div className="space-y-2">
             {events.map((event) => (
-              <div key={event.id} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+              <div 
+                key={event.id} 
+                className="flex justify-between items-center p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
+                onClick={() => handleEventClick(event)}
+              >
                 <div className="flex items-center gap-3">
                   <CalendarIcon className="w-5 h-5 text-gray-400" />
                   <div>
@@ -211,14 +215,81 @@ function Calendar() {
                   </div>
                   {event.alarm && <Bell className="w-4 h-4 text-blue-600" />}
                 </div>
-                <Button size="sm" variant="ghost" onClick={() => handleDelete(event.id)}>
-                  <Trash2 className="w-4 h-4 text-red-500" />
-                </Button>
               </div>
             ))}
           </div>
         </CardContent>
       </Card>
+
+      {/* Event Detail Dialog */}
+      <Dialog open={detailDialogOpen} onOpenChange={setDetailDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Etkinlik Detayları</DialogTitle>
+          </DialogHeader>
+          {selectedEvent && (
+            <div className="space-y-4">
+              <div>
+                <Label className="text-gray-600">Başlık</Label>
+                <p className="text-lg font-semibold text-gray-800 mt-1">{selectedEvent.title}</p>
+              </div>
+              
+              {selectedEvent.description && (
+                <div>
+                  <Label className="text-gray-600">Açıklama</Label>
+                  <p className="text-gray-700 mt-1">{selectedEvent.description}</p>
+                </div>
+              )}
+              
+              <div>
+                <Label className="text-gray-600">Tarih ve Saat</Label>
+                <p className="text-gray-800 mt-1">
+                  {new Date(selectedEvent.date).toLocaleDateString('tr-TR', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })} - {new Date(selectedEvent.date).toLocaleTimeString('tr-TR', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  })}
+                </p>
+              </div>
+              
+              <div>
+                <Label className="text-gray-600">Hatırlatıcı</Label>
+                <div className="flex items-center gap-2 mt-1">
+                  {selectedEvent.alarm ? (
+                    <>
+                      <Bell className="w-4 h-4 text-blue-600" />
+                      <p className="text-gray-800">Hatırlatıcı aktif</p>
+                    </>
+                  ) : (
+                    <p className="text-gray-500">Hatırlatıcı yok</p>
+                  )}
+                </div>
+              </div>
+              
+              <div className="flex gap-2 pt-4">
+                <Button
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => setDetailDialogOpen(false)}
+                >
+                  Kapat
+                </Button>
+                <Button
+                  variant="destructive"
+                  onClick={() => handleDelete(selectedEvent.id)}
+                  data-testid={`delete-event-detail-${selectedEvent.id}`}
+                >
+                  <Trash2 className="w-4 h-4 mr-2" />
+                  Sil
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
