@@ -611,51 +611,30 @@ async def get_currency_rates():
         "timestamp": datetime.now(timezone.utc).isoformat()
     }
 
-# Product price comparison endpoint
-@api_router.get("/products/price-comparison")
-async def get_price_comparison(
-    product_name: Optional[str] = Query(None, description="Product name to search"),
-    category: Optional[str] = Query(None, description="Product category to filter"),
+# Product price comparison endpoint (web search)
+@api_router.get("/products/{product_id}/price-comparison")
+async def get_product_price_comparison(
+    product_id: str,
     current_user: User = Depends(get_current_user)
 ):
     """
-    Compare prices of products in the inventory
-    Returns products sorted by price for comparison
+    Search for product prices across the internet
+    Returns top 10 lowest prices from different websites
     """
-    query = {}
+    # Get product details
+    product = await db.products.find_one({"id": product_id}, {"_id": 0})
+    if not product:
+        raise HTTPException(status_code=404, detail="Ürün bulunamadı")
     
-    if product_name:
-        query["name"] = {"$regex": product_name, "$options": "i"}
-    
-    if category:
-        query["category"] = {"$regex": category, "$options": "i"}
-    
-    products = await db.products.find(query, {"_id": 0}).sort("sale_price", 1).to_list(100)
-    
-    # Calculate profit margins and add comparison data
-    comparison_data = []
-    for product in products:
-        profit_margin = ((product["sale_price"] - product["purchase_price"]) / product["sale_price"] * 100) if product["sale_price"] > 0 else 0
-        
-        comparison_data.append({
-            "id": product["id"],
-            "name": product["name"],
-            "brand": product["brand"],
-            "category": product["category"],
-            "purchase_price": product["purchase_price"],
-            "sale_price": product["sale_price"],
-            "profit_margin": round(profit_margin, 2),
-            "quantity": product["quantity"],
-            "barcode": product["barcode"]
-        })
-    
+    # This will be called from frontend using web search
+    # Return product info for search
     return {
-        "products": comparison_data,
-        "total_count": len(comparison_data),
-        "filters_applied": {
-            "product_name": product_name,
-            "category": category
-        }
+        "product_id": product["id"],
+        "product_name": product["name"],
+        "brand": product["brand"],
+        "category": product["category"],
+        "current_price": product["sale_price"],
+        "barcode": product.get("barcode", "")
     }
 
 # Calendar endpoints
