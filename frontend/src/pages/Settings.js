@@ -9,7 +9,7 @@ import { Switch } from '../components/ui/switch';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../components/ui/dialog';
-import { Moon, Sun, Plus, Edit2 } from 'lucide-react';
+import { Moon, Sun, Plus, Edit2, Trash2 } from 'lucide-react';
 
 const ROLE_PERMISSIONS = {
   'yönetici': {
