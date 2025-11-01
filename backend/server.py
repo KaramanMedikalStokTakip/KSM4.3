@@ -433,6 +433,21 @@ async def update_customer(customer_id: str, customer_data: dict, current_user: U
         customer["created_at"] = datetime.fromisoformat(customer["created_at"])
     return customer
 
+@api_router.delete("/customers/{customer_id}")
+async def delete_customer(customer_id: str, current_user: User = Depends(get_current_user)):
+    # Only admins can delete customers
+    if current_user.role != "yönetici":
+        raise HTTPException(status_code=403, detail="Sadece yöneticiler müşteri silebilir")
+    
+    # Soft delete: mark as deleted instead of removing
+    result = await db.customers.update_one(
+        {"id": customer_id},
+        {"$set": {"deleted": True}}
+    )
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Müşteri bulunamadı")
+    return {"message": "Müşteri silindi"}
+
 # Reports endpoints
 @api_router.get("/reports/top-selling")
 async def get_top_selling(
