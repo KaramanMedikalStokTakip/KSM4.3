@@ -167,22 +167,30 @@ function Customers() {
                   })}
                 </p>
               )}
-              <div className="mt-4 p-3 bg-blue-50 rounded-md">
-                <p className="text-sm text-gray-600">Toplam Harcama</p>
-                <p className="text-2xl font-bold text-blue-600">₺{customer.total_spent?.toFixed(2) || '0.00'}</p>
-              </div>
               {customer.notes && (
                 <p className="text-sm text-gray-500 mt-3 italic">"{customer.notes}"</p>
               )}
-              <Button
-                className="w-full mt-4"
-                variant="outline"
-                onClick={() => viewPurchases(customer)}
-                data-testid={`view-purchases-${customer.id}`}
-              >
-                <Eye className="w-4 h-4 mr-2" />
-                Satın Almalar
-              </Button>
+              <div className="flex gap-2 mt-4">
+                <Button
+                  className="flex-1"
+                  variant="outline"
+                  onClick={() => viewPurchases(customer)}
+                  data-testid={`view-purchases-${customer.id}`}
+                >
+                  <Eye className="w-4 h-4 mr-2" />
+                  Satın Almalar
+                </Button>
+                {user?.role === 'yönetici' && (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => handleDelete(customer.id)}
+                    data-testid={`delete-customer-${customer.id}`}
+                  >
+                    <Trash2 className="w-4 h-4 text-red-500" />
+                  </Button>
+                )}
+              </div>
             </CardContent>
           </Card>
         ))}
