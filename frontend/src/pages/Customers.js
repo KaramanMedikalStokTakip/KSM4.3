@@ -66,6 +66,18 @@ function Customers() {
     setPurchasesDialogOpen(true);
   };
 
+  const handleDelete = async (customerId) => {
+    if (!window.confirm('Bu müşteriyi silmek istediğinizden emin misiniz?')) return;
+
+    try {
+      await axios.delete(`${API}/customers/${customerId}`);
+      toast.success('Müşteri silindi');
+      fetchCustomers();
+    } catch (error) {
+      toast.error(error.response?.data?.detail || 'Silme işlemi başarısız');
+    }
+  };
+
   const resetForm = () => {
     setFormData({ name: '', phone: '', email: '', address: '', notes: '' });
   };
