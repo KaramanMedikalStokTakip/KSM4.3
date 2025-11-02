@@ -49,6 +49,10 @@ function Stock() {
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    applyFilters();
+  }, [products, filters]);
+
   const fetchProducts = async () => {
     try {
       const response = await axios.get(`${API}/products`);
