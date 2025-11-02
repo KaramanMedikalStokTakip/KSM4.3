@@ -12,6 +12,7 @@ import { Html5QrcodeScanner } from 'html5-qrcode';
 
 function Stock() {
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [priceCompareDialogOpen, setPriceCompareDialogOpen] = useState(false);
@@ -21,6 +22,10 @@ function Stock() {
   const [editMode, setEditMode] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
   const [aiLoading, setAiLoading] = useState(false);
+  const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
+  const [showFilters, setShowFilters] = useState(false);
+  const [scannerDialogOpen, setScannerDialogOpen] = useState(false);
+  const scannerRef = useRef(null);
   const [formData, setFormData] = useState({
     name: '',
     barcode: '',
@@ -32,6 +37,12 @@ function Stock() {
     sale_price: 0,
     description: '',
     image_base64: ''
+  });
+  const [filters, setFilters] = useState({
+    name: '',
+    barcode: '',
+    brand: '',
+    category: ''
   });
 
   useEffect(() => {
