@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Yeni özellikler ekleniyor: 1) Müşteri yönetiminde toplam harcama kaldırılacak ve silme butonu eklenecek (sadece yönetici), 2) Takvim etkinliklerine tıklanınca popup ile detay gösterilecek ve silinebilecek, 3) Ürün ismine tıklanınca internet üzerinden fiyat karşılaştırması yapılacak (en düşük 10 site)"
+user_problem_statement: "Stok yönetim iyileştirmeleri: 1) Fiyat karşılaştırma linklerinin düzgün çalışması, 2) Liste/Grid görünüm geçişi, 3) Gelişmiş arama ve filtreleme (ürün adı, barkod, marka, kategori - birden fazla filtre aynı anda), 4) Barkod tarama (USB/Bluetooth okuyucu + kamera ile tarama)"
 
 backend:
   - task: "Currency API Implementation"
