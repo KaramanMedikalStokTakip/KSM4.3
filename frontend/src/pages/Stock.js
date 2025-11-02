@@ -468,8 +468,77 @@ function Stock() {
         </Dialog>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {products.map((product) => (
+      {/* Filtre Paneli */}
+      {showFilters && (
+        <Card>
+          <CardContent className="pt-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+              <div>
+                <Label>Ürün Adı</Label>
+                <Input
+                  placeholder="Ürün adı ara..."
+                  value={filters.name}
+                  onChange={(e) => setFilters({ ...filters, name: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label>Barkod</Label>
+                <div className="flex gap-2">
+                  <Input
+                    placeholder="Barkod okutun veya girin..."
+                    value={filters.barcode}
+                    onChange={(e) => setFilters({ ...filters, barcode: e.target.value })}
+                    autoFocus={filters.barcode === ''}
+                  />
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    size="sm"
+                    onClick={startBarcodeScanner}
+                    title="Kamera ile tara"
+                  >
+                    <Camera className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+              <div>
+                <Label>Marka</Label>
+                <Input
+                  placeholder="Marka ara..."
+                  value={filters.brand}
+                  onChange={(e) => setFilters({ ...filters, brand: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label>Kategori</Label>
+                <Input
+                  placeholder="Kategori ara..."
+                  value={filters.category}
+                  onChange={(e) => setFilters({ ...filters, category: e.target.value })}
+                />
+              </div>
+              <div className="flex items-end">
+                <Button 
+                  variant="outline" 
+                  onClick={clearFilters}
+                  className="w-full"
+                >
+                  <X className="w-4 h-4 mr-2" />
+                  Temizle
+                </Button>
+              </div>
+            </div>
+            <div className="mt-4 text-sm text-gray-600">
+              {filteredProducts.length} ürün gösteriliyor {filteredProducts.length !== products.length && `(${products.length} toplam)`}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Grid Görünümü */}
+      {viewMode === 'grid' && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {filteredProducts.map((product) => (
           <Card key={product.id} className="card-hover" data-testid={`product-card-${product.id}`}>
             <CardContent className="pt-6">
               {product.image_url && (
