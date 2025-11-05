@@ -766,9 +766,12 @@ function Stock() {
             <DialogTitle>Barkod Tara</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
-            <div id="barcode-scanner-region" className="w-full"></div>
+            <div id="barcode-scanner-region" className="w-full min-h-[300px] rounded-lg overflow-hidden"></div>
             <p className="text-sm text-gray-600 text-center">
-              Barkodu kameranın önüne getirin. Otomatik olarak taranacaktır.
+              📱 Barkodu kameranın önüne getirin. Otomatik olarak taranacaktır.
+            </p>
+            <p className="text-xs text-gray-500 text-center">
+              💡 Kamera açılmazsa lütfen tarayıcınızın kamera iznini kontrol edin.
             </p>
             <Button variant="outline" onClick={stopBarcodeScanner} className="w-full">
               İptal
