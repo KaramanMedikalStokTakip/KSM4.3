@@ -16,6 +16,7 @@ function Calendar() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [detailDialogOpen, setDetailDialogOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [lastClickTime, setLastClickTime] = useState(0);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
