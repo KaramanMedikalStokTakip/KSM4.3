@@ -110,12 +110,17 @@ function Dashboard() {
           </CardContent>
         </Card>
 
-        <Card className="stat-card" data-testid="low-stock-card">
+        <Card 
+          className="stat-card cursor-pointer hover:shadow-lg transition-shadow" 
+          data-testid="low-stock-card"
+          onClick={() => navigate('/stock')}
+        >
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-500">Düşük Stok</p>
                 <h3 className="text-3xl font-bold text-orange-600">{stats?.low_stock_count || 0}</h3>
+                <p className="text-xs text-orange-500 mt-1">Tıklayın →</p>
               </div>
               <div className="bg-orange-100 p-3 rounded-full">
                 <TrendingDown className="w-6 h-6 text-orange-600" />
