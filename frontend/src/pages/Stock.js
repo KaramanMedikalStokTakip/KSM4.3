@@ -423,6 +423,32 @@ function Stock() {
                       data-testid="product-sale-price-input"
                     />
                   </div>
+                  <div>
+                    <Label>Satış Birimi *</Label>
+                    <select
+                      className="w-full border rounded-md px-3 py-2 bg-white"
+                      value={formData.unit_type}
+                      onChange={(e) => setFormData({ ...formData, unit_type: e.target.value })}
+                      data-testid="product-unit-type-select"
+                    >
+                      <option value="adet">Adet</option>
+                      <option value="kutu">Kutu</option>
+                    </select>
+                  </div>
+                  {formData.unit_type === 'kutu' && (
+                    <div>
+                      <Label>Kutu İçeriği (Adet) *</Label>
+                      <Input
+                        type="number"
+                        value={formData.package_quantity || ''}
+                        onChange={(e) => setFormData({ ...formData, package_quantity: parseInt(e.target.value) || null })}
+                        placeholder="Örn: 12"
+                        required={formData.unit_type === 'kutu'}
+                        data-testid="product-package-quantity-input"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">1 kutu kaç adet içeriyor?</p>
+                    </div>
+                  )}
                 </div>
 
                 <div>
