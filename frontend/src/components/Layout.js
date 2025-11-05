@@ -242,9 +242,9 @@ function Layout({ children }) {
           data-testid="mobile-sidebar"
         >
           <div className="p-4 border-b flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <img src="/logo.png" alt="Karaman Sağlık Logo" className="h-12 w-auto object-contain" />
-            </div>
+            <Link to="/" className="flex items-center gap-3" onClick={() => setMobileMenuOpen(false)}>
+              <img src="/logo.png" alt="Karaman Sağlık Logo" className="h-12 w-auto object-contain cursor-pointer" />
+            </Link>
             <Button
               variant="ghost"
               size="sm"
