@@ -144,12 +144,20 @@ function Calendar() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card className="lg:col-span-2">
           <CardContent className="pt-6 flex justify-center">
-            <CalendarComponent
-              mode="single"
-              selected={selectedDate}
-              onSelect={setSelectedDate}
-              className="rounded-md border"
-            />
+            <div onDoubleClick={(e) => {
+              if (selectedDate) {
+                const dateStr = selectedDate.toISOString().slice(0, 16);
+                setFormData({ ...formData, date: dateStr });
+                setDialogOpen(true);
+              }
+            }}>
+              <CalendarComponent
+                mode="single"
+                selected={selectedDate}
+                onSelect={setSelectedDate}
+                className="rounded-md border"
+              />
+            </div>
           </CardContent>
         </Card>
 
