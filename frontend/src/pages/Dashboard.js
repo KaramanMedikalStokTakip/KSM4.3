@@ -96,14 +96,14 @@ function Dashboard() {
           data-testid="total-products-card"
           onClick={() => navigate('/stock')}
         >
-          <CardContent className="pt-6">
+          <CardContent className="pt-4 sm:pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Toplam Ürün</p>
-                <h3 className="text-3xl font-bold text-gray-800">{stats?.total_products || 0}</h3>
+                <p className="text-xs sm:text-sm text-gray-500">Toplam Ürün</p>
+                <h3 className="text-2xl sm:text-3xl font-bold text-gray-800">{stats?.total_products || 0}</h3>
               </div>
-              <div className="bg-blue-100 p-3 rounded-full">
-                <Package className="w-6 h-6 text-blue-600" />
+              <div className="bg-blue-100 p-2 sm:p-3 rounded-full">
+                <Package className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
               </div>
             </div>
           </CardContent>
