@@ -104,3 +104,7 @@ temp/
 
 # Admin creation scripts (temporary)
 create_admin*.py
+-e 
+# Environment files
+*.env
+*.env.*
