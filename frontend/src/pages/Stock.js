@@ -177,10 +177,19 @@ function Stock() {
 
   const stopBarcodeScanner = () => {
     if (scannerRef.current) {
-      scannerRef.current.clear().catch(err => console.error(err));
-      scannerRef.current = null;
+      scannerRef.current.stop()
+        .then(() => {
+          scannerRef.current = null;
+          setScannerDialogOpen(false);
+        })
+        .catch(err => {
+          console.error(err);
+          scannerRef.current = null;
+          setScannerDialogOpen(false);
+        });
+    } else {
+      setScannerDialogOpen(false);
     }
-    setScannerDialogOpen(false);
   };
 
   const handleImageUpload = (e) => {
