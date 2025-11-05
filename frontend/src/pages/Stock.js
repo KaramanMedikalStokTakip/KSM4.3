@@ -814,6 +814,17 @@ function Stock() {
           </DialogHeader>
           <div className="space-y-4">
             <div id="barcode-scanner-region" className="w-full min-h-[300px] rounded-lg overflow-hidden bg-black"></div>
+            
+            {cameraError && (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-3 flex items-start gap-2">
+                <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                <div className="text-sm text-red-700">
+                  <p className="font-semibold">Hata:</p>
+                  <p>{cameraError}</p>
+                </div>
+              </div>
+            )}
+            
             <div className="space-y-2">
               <p className="text-sm text-gray-600 text-center font-medium">
                 📱 Barkodu kameranın önüne getirin
@@ -825,9 +836,10 @@ function Stock() {
                 <p className="font-semibold mb-1">💡 Kamera açılmadıysa:</p>
                 <ul className="list-disc list-inside space-y-1 ml-2">
                   <li>Tarayıcı izin isteğinde "İzin Ver" seçeneğini tıklayın</li>
-                  <li>Ayarlardan kamera iznini kontrol edin</li>
+                  <li>Ayarlar {">"} Site Ayarları {">"} Kamera iznini kontrol edin</li>
+                  <li>Chrome: Adres çubuğundaki kilit/kamera ikonuna tıklayın</li>
                   <li>Sayfayı yenileyin ve tekrar deneyin</li>
-                  <li>Güvenli bağlantı (HTTPS) gerekir</li>
+                  <li>Konsolu açın (F12) ve hata mesajlarını kontrol edin</li>
                 </ul>
               </div>
             </div>
