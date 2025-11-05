@@ -164,14 +164,14 @@ function Layout({ children }) {
         >
           <div className="p-4 border-b flex items-center justify-between">
             {sidebarOpen && (
-              <div className="flex items-center gap-3">
-                <img src="/logo.png" alt="Karaman Sağlık Logo" className="h-12 w-auto object-contain" />
-              </div>
+              <Link to="/" className="flex items-center gap-3">
+                <img src="/logo.png" alt="Karaman Sağlık Logo" className="h-12 w-auto object-contain cursor-pointer" />
+              </Link>
             )}
             {!sidebarOpen && (
-              <div className="flex items-center justify-center w-full">
-                <img src="/logo.png" alt="Logo" className="h-10 w-auto object-contain" />
-              </div>
+              <Link to="/" className="flex items-center justify-center w-full">
+                <img src="/logo.png" alt="Logo" className="h-10 w-auto object-contain cursor-pointer" />
+              </Link>
             )}
             <Button
               variant="ghost"
