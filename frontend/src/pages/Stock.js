@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../components/ui/dialog';
 import { Label } from '../components/ui/label';
 import { Plus, Edit, Trash2, Sparkles, Upload, Grid3x3, List, Search, Camera, X, Filter } from 'lucide-react';
-import { Html5QrcodeScanner } from 'html5-qrcode';
+import { Html5Qrcode } from 'html5-qrcode';
 
 function Stock() {
   const [products, setProducts] = useState([]);
