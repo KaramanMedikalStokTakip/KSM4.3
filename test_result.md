@@ -105,6 +105,30 @@
 user_problem_statement: "İyileştirmeler: 1) Login ekranında logo filigran, 2) Takvimde tarih çift tıklama ile etkinlik ekleme, 3) Stok yönetiminde kutu satış özelliği (kutu içeriği adedi ile birlikte), 4) Admin giriş bilgisi oluşturma"
 
 backend:
+  - task: "Product Model - Kutu Satış Alanları Eklendi"
+    implemented: true
+    working: "NA"
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Product, ProductCreate ve ProductUpdate modellerine unit_type (adet/kutu) ve package_quantity (kutu içeriği adedi) alanları eklendi. Varsayılan olarak unit_type='adet'."
+
+  - task: "Admin Kullanıcı Oluşturma"
+    implemented: true
+    working: true
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "Admin kullanıcı oluşturuldu. Kullanıcı adı: admin, Şifre: admin123, Rol: yönetici"
+
   - task: "Product Endpoints - GET /api/products"
     implemented: true
     working: true
