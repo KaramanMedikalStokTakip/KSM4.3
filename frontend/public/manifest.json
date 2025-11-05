@@ -1,7 +1,7 @@
 {
-  "short_name": "Stok CRM",
-  "name": "Stok Yönetim ve CRM Sistemi",
-  "description": "Profesyonel stok takibi, müşteri yönetimi ve iş takip sistemi",
+  "short_name": "KSM Stok Yönetimi",
+  "name": "KSM Stok Yönetimi",
+  "description": "KSM Stok Yönetim ve CRM Sistemi",
   "icons": [
     {
       "src": "icon-72x72.png",
