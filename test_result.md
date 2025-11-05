@@ -258,14 +258,14 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Stock Management - Fix Price Comparison Links"
-    - "Stock Management - List/Grid View Toggle"
-    - "Stock Management - Advanced Search & Filtering"
-    - "Stock Management - Barcode Scanner Integration"
+    - "Login - Logo Filigran Eklendi"
+    - "Calendar - Çift Tıklama ile Etkinlik Ekleme"
+    - "Stock - Kutu Satış Özelliği"
+    - "Product Model - Kutu Satış Alanları Eklendi"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
-  backend_testing_complete: true
+  backend_testing_complete: false
 
 agent_communication:
     - agent: "main"
