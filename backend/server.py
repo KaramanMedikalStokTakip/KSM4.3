@@ -818,6 +818,38 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+@app.on_event("startup")
+async def startup_create_admin():
+    """Create default admin user if not exists"""
+    try:
+        # Check if admin user exists
+        existing_admin = await db.users.find_one({"username": "admin"})
+        
+        if not existing_admin:
+            # Create admin user
+            admin_password = "Admin123!"  # Strong default password
+            hashed_password = pwd_context.hash(admin_password)
+            
+            admin_user = {
+                "id": str(uuid.uuid4()),
+                "username": "admin",
+                "email": "admin@stokcrm.com",
+                "password": hashed_password,
+                "role": "yönetici",
+                "created_at": datetime.now(timezone.utc)
+            }
+            
+            await db.users.insert_one(admin_user)
+            logger.info("✅ Admin kullanıcı oluşturuldu!")
+            logger.info(f"   Kullanıcı Adı: admin")
+            logger.info(f"   Şifre: {admin_password}")
+            logger.info(f"   Email: admin@stokcrm.com")
+            logger.info(f"   Rol: yönetici")
+        else:
+            logger.info("ℹ️  Admin kullanıcı zaten mevcut")
+    except Exception as e:
+        logger.error(f"❌ Admin kullanıcı oluşturulurken hata: {e}")
+
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
