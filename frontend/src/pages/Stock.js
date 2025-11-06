@@ -108,7 +108,8 @@ function Stock() {
     });
   };
 
-  const startBarcodeScanner = () => {
+  const startBarcodeScanner = (mode = 'filter') => {
+    setScannerMode(mode);
     setScannerDialogOpen(true);
     setCameraError('');
     
