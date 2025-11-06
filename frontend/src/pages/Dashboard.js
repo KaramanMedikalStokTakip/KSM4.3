@@ -307,8 +307,18 @@ function Dashboard() {
                 className="barcode-focus"
                 data-testid="dashboard-barcode-input"
               />
-              <Button type="submit" disabled={searching} data-testid="dashboard-barcode-search-btn">
-                {searching ? 'Aranıyor...' : 'Ara'}
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                onClick={() => {
+                  closeSearchDialog();
+                  startBarcodeScanner();
+                }}
+                disabled={searching}
+                title="Kamera ile Barkod Tara"
+              >
+                <Camera className="w-4 h-4" />
               </Button>
             </form>
 
