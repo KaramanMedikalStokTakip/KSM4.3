@@ -449,12 +449,24 @@ function Stock() {
                   </div>
                   <div>
                     <Label>Barkod *</Label>
-                    <Input
-                      value={formData.barcode}
-                      onChange={(e) => setFormData({ ...formData, barcode: e.target.value })}
-                      required
-                      data-testid="product-barcode-input"
-                    />
+                    <div className="flex gap-2">
+                      <Input
+                        value={formData.barcode}
+                        onChange={(e) => setFormData({ ...formData, barcode: e.target.value })}
+                        required
+                        placeholder="Barkod numarası"
+                        data-testid="product-barcode-input"
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="icon"
+                        onClick={() => startBarcodeScanner('form')}
+                        title="Barkod Tara"
+                      >
+                        <Camera className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </div>
                   <div>
                     <Label>Marka *</Label>
