@@ -115,3 +115,82 @@
     border-radius: 4px;
   }
 }
+
+/* Dark Mode Styles */
+body.dark-mode {
+  background-color: #1a1a1a;
+  color: #e5e5e5;
+}
+
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+  background-color: #2d2d2d;
+  color: #ffffff;
+  border-color: #404040;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+  color: #9ca3af;
+}
+
+body.dark-mode input:focus,
+body.dark-mode textarea:focus,
+body.dark-mode select:focus {
+  border-color: #6366f1;
+  background-color: #333333;
+}
+
+body.dark-mode .bg-white {
+  background-color: #1f1f1f !important;
+}
+
+body.dark-mode .bg-gray-50 {
+  background-color: #2d2d2d !important;
+}
+
+body.dark-mode .bg-gray-100 {
+  background-color: #333333 !important;
+}
+
+body.dark-mode .text-gray-700,
+body.dark-mode .text-gray-800,
+body.dark-mode .text-gray-900 {
+  color: #e5e5e5 !important;
+}
+
+body.dark-mode .text-gray-500,
+body.dark-mode .text-gray-600 {
+  color: #9ca3af !important;
+}
+
+body.dark-mode .border-gray-200,
+body.dark-mode .border-gray-300 {
+  border-color: #404040 !important;
+}
+
+body.dark-mode .stat-card {
+  background: #1f1f1f;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .currency-ticker {
+  background: linear-gradient(135deg, #4c5fd7 0%, #5c3b82 100%);
+}
+
+/* Dark mode için dialog ve card'lar */
+body.dark-mode [role="dialog"],
+body.dark-mode .card {
+  background-color: #1f1f1f !important;
+  border-color: #404040 !important;
+}
+
+/* Dark mode için button'lar */
+body.dark-mode button:not(.bg-blue-600):not(.bg-red-600):not(.bg-green-600) {
+  color: #e5e5e5;
+}
+
+body.dark-mode button:hover:not(.bg-blue-600):not(.bg-red-600):not(.bg-green-600) {
+  background-color: #333333;
+}
