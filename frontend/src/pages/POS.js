@@ -374,6 +374,42 @@ function POS() {
           </Card>
         </div>
       </div>
+
+      {/* Barcode Scanner Dialog */}
+      <Dialog open={scannerDialogOpen} onOpenChange={(open) => {
+        if (!open) stopBarcodeScanner();
+      }}>
+        <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>📷 Barkod Tara (POS)</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div id="pos-barcode-scanner-region" className="w-full min-h-[300px] rounded-lg overflow-hidden bg-black"></div>
+            
+            {cameraError && (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-3 flex items-start gap-2">
+                <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                <div className="text-sm text-red-700">
+                  <p className="font-semibold">Hata:</p>
+                  <p>{cameraError}</p>
+                </div>
+              </div>
+            )}
+            
+            <div className="space-y-2">
+              <p className="text-sm text-gray-600 text-center font-medium">
+                📱 Barkodu kameranın önüne getirin
+              </p>
+              <p className="text-xs text-gray-500 text-center">
+                Ürün otomatik olarak sepete eklenecektir
+              </p>
+            </div>
+            <Button variant="outline" onClick={stopBarcodeScanner} className="w-full">
+              Kapat
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
