@@ -264,6 +264,67 @@ function Stock() {
     }
   };
 
+  const startCamera = async () => {
+    setCameraDialogOpen(true);
+    setCapturedPhoto(null);
+    
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment', width: 1280, height: 720 }
+      });
+      
+      setCameraStream(stream);
+      
+      setTimeout(() => {
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          videoRef.current.play();
+        }
+      }, 100);
+    } catch (error) {
+      console.error('Kamera erişim hatası:', error);
+      toast.error('Kamera açılamadı. Lütfen izinleri kontrol edin.');
+      setCameraDialogOpen(false);
+    }
+  };
+
+  const capturePhoto = () => {
+    if (videoRef.current && canvasRef.current) {
+      const video = videoRef.current;
+      const canvas = canvasRef.current;
+      
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      
+      const context = canvas.getContext('2d');
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      
+      const photoData = canvas.toDataURL('image/jpeg', 0.8);
+      setCapturedPhoto(photoData);
+    }
+  };
+
+  const retakePhoto = () => {
+    setCapturedPhoto(null);
+  };
+
+  const usePhoto = () => {
+    if (capturedPhoto) {
+      setFormData({ ...formData, image_base64: capturedPhoto });
+      stopCamera();
+      toast.success('Fotoğraf eklendi!');
+    }
+  };
+
+  const stopCamera = () => {
+    if (cameraStream) {
+      cameraStream.getTracks().forEach(track => track.stop());
+      setCameraStream(null);
+    }
+    setCameraDialogOpen(false);
+    setCapturedPhoto(null);
+  };
+
   const generateAIDescription = async () => {
     if (!formData.name || !formData.brand || !formData.category) {
       toast.error('Lütfen önce ürün adı, marka ve kategori girin');
