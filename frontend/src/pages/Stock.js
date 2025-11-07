@@ -960,6 +960,59 @@ function Stock() {
         </DialogContent>
       </Dialog>
 
+      {/* Camera Dialog */}
+      <Dialog open={cameraDialogOpen} onOpenChange={(open) => {
+        if (!open) stopCamera();
+      }}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>📷 Fotoğraf Çek</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            {!capturedPhoto ? (
+              <>
+                <div className="relative bg-black rounded-lg overflow-hidden" style={{ minHeight: '400px' }}>
+                  <video
+                    ref={videoRef}
+                    autoPlay
+                    playsInline
+                    className="w-full h-full object-cover"
+                    style={{ minHeight: '400px' }}
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <Button onClick={capturePhoto} className="flex-1">
+                    <Camera className="w-4 h-4 mr-2" />
+                    Fotoğraf Çek
+                  </Button>
+                  <Button variant="outline" onClick={stopCamera}>
+                    İptal
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="relative bg-black rounded-lg overflow-hidden">
+                  <img src={capturedPhoto} alt="Çekilen fotoğraf" className="w-full h-auto" />
+                </div>
+                <div className="flex gap-2">
+                  <Button onClick={usePhoto} className="flex-1" variant="default">
+                    ✓ Bu Fotoğrafı Kullan
+                  </Button>
+                  <Button onClick={retakePhoto} variant="outline">
+                    🔄 Tekrar Çek
+                  </Button>
+                  <Button variant="outline" onClick={stopCamera}>
+                    İptal
+                  </Button>
+                </div>
+              </>
+            )}
+            <canvas ref={canvasRef} style={{ display: 'none' }} />
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Price Comparison Dialog */}
       <Dialog open={priceCompareDialogOpen} onOpenChange={setPriceCompareDialogOpen}>
         <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
