@@ -574,23 +574,28 @@ async def get_currency_rates():
                     usd_try = 35.50
                     eur_try = 38.20
             
-            # Get Gold and Silver prices in TRY
-            gold_try = 3250.00
-            silver_try = 38.50
+            # Get Gold and Silver prices in TRY (per gram)
+            gold_try = 5400.00  # Updated fallback
+            silver_try = 62.50  # Updated fallback
             
             try:
-                # Try metalpriceapi.com (free, no key required for basic usage)
-                async with session.get("https://api.metalpriceapi.com/v1/latest?base=TRY&currencies=XAU,XAG") as metal_resp:
+                # Try metalpriceapi.com - base USD to get XAU/XAG in USD, then convert to TRY
+                async with session.get("https://api.metalpriceapi.com/v1/latest?base=USD&currencies=XAU,XAG") as metal_resp:
                     if metal_resp.status == 200:
                         metal_data = await metal_resp.json()
                         if metal_data.get("success"):
-                            # API returns TRY per ounce of gold/silver
                             rates_metal = metal_data.get("rates", {})
-                            # Convert from per ounce to per gram (1 troy ounce = 31.1035 grams)
+                            # rates_metal["XAU"] = how many XAU per 1 USD (e.g., 0.000385 XAU per USD)
+                            # We need USD per XAU (per troy ounce), so: 1 / rates_metal["XAU"]
+                            # Then convert to TRY per gram: (USD_per_ounce * usd_try) / 31.1035
+                            
                             if rates_metal.get("XAU"):
-                                gold_try = round((1 / rates_metal["XAU"]) * 31.1035, 2)
+                                usd_per_ounce_gold = 1 / rates_metal["XAU"]  # USD per troy ounce
+                                gold_try = round((usd_per_ounce_gold * usd_try) / 31.1035, 2)  # TRY per gram
+                            
                             if rates_metal.get("XAG"):
-                                silver_try = round((1 / rates_metal["XAG"]) * 31.1035, 2)
+                                usd_per_ounce_silver = 1 / rates_metal["XAG"]  # USD per troy ounce
+                                silver_try = round((usd_per_ounce_silver * usd_try) / 31.1035, 2)  # TRY per gram
             except Exception as metal_error:
                 logging.warning(f"Metal price API error: {metal_error}, using fallback")
             
