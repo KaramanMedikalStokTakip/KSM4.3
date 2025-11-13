@@ -153,10 +153,12 @@ function ThreeBackground({ isDark = false }) {
     window.addEventListener('resize', handleResize);
 
     // Start animation
+    isAnimatingRef.current = true;
     animate();
 
     // Cleanup function
     return () => {
+      isAnimatingRef.current = false;
       
       document.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
