@@ -454,6 +454,27 @@ async def delete_customer(customer_id: str, current_user: User = Depends(get_cur
         raise HTTPException(status_code=404, detail="Müşteri bulunamadı")
     return {"message": "Müşteri silindi"}
 
+@api_router.get("/customers/search")
+async def search_customers(
+    q: str = Query(..., description="Arama terimi (isim veya telefon)"),
+    current_user: User = Depends(get_current_user)
+):
+    """Müşterileri isim veya telefon numarasına göre arar"""
+    search_query = {
+        "$and": [
+            {"$or": [{"deleted": {"$exists": False}}, {"deleted": False}]},
+            {
+                "$or": [
+                    {"name": {"$regex": q, "$options": "i"}},
+                    {"phone": {"$regex": q, "$options": "i"}}
+                ]
+            }
+        ]
+    }
+    
+    customers = await db.customers.find(search_query, {"_id": 0}).to_list(100)
+    return customers
+
 # Reports endpoints
 @api_router.get("/reports/top-selling")
 async def get_top_selling(
