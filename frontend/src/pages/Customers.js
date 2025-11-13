@@ -159,20 +159,20 @@ function Customers() {
               </div>
               <div>
                 <Label>Adres</Label>
-                <textarea
-                  className="w-full border rounded-md px-3 py-2"
+                <Textarea
                   value={formData.address}
                   onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                   data-testid="customer-address-input"
+                  placeholder="Müşteri adresi"
                 />
               </div>
               <div>
                 <Label>Notlar</Label>
-                <textarea
-                  className="w-full border rounded-md px-3 py-2"
+                <Textarea
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                   data-testid="customer-notes-input"
+                  placeholder="Notlar"
                 />
               </div>
               <Button type="submit" className="w-full" data-testid="submit-customer-btn">Ekle</Button>
