@@ -16,7 +16,6 @@ function ThreeBackground({ isDark = false }) {
     const init = () => {
       // Scene
       scene = new THREE.Scene();
-      console.log('✅ Three.js Scene created');
 
       // Camera
       camera = new THREE.PerspectiveCamera(
