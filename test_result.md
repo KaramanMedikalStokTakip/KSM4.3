@@ -280,6 +280,91 @@ frontend:
           agent: "main"
           comment: "Düşük stok yoksa (low_stock_count === 0) karta tıklandığında bilgilendirme toast mesajı gösteriliyor: 'Düşük stokta ürün bulunmuyor! 🎉'. Kart opacity-75 ile görsel olarak pasif gösteriliyor ve yeşil '✓ Hepsi yeterli' mesajı eklendi."
 
+  - task: "Modal Responsive Düzeltmeleri"
+    implemented: true
+    working: true
+    file: "frontend/src/components/ui/dialog.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "Modal kapatma (X) butonlarının mobil ve küçük ekranlarda taşma sorunu düzeltildi. DialogContent'e z-index eklendi, kapatma butonu için bg-white dark:bg-gray-800 ve shadow-md eklendi. DialogHeader'a pr-8 padding eklendi. DialogTitle'a overflow-hidden ve text-ellipsis eklendi. Artık mobilde modal başlıkları ve kapatma butonları düzgün görünüyor."
+
+  - task: "Müşteri Arama Özelliği"
+    implemented: true
+    working: true
+    file: "frontend/src/pages/Customers.js, backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "Backend: GET /api/customers/search?q={query} endpoint'i eklendi. İsim ve telefon numarasına göre regex arama yapıyor. Frontend: Müşteriler sayfasına arama kutusu eklendi. Real-time arama, 'Temizle' butonu, arama durumu göstergeleri (Aranıyor..., Sonuç bulunamadı) eklendi. Müşteri sayısı artsa bile backend'den arama yapılıyor."
+
+  - task: "Stok Raporu Filtreleme"
+    implemented: true
+    working: true
+    file: "frontend/src/pages/Reports.js, backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "Backend: GET /api/products/filters (marka ve kategori listesi), GET /api/reports/stock?brand=&category= endpoint'leri eklendi. Stok raporu marka/kategori filtreleme, toplam ürün/adet/değer özeti, detaylı tablo görünümü ile birlikte geliyor. Frontend: Reports.js'e yeni 'Stok Raporu' sekmesi eklendi. Marka ve kategori dropdown filtreleri, özet kartları, detaylı ürün tablosu eklendi."
+
+  - task: "Çoklu Format Rapor İndirme"
+    implemented: true
+    working: true
+    file: "frontend/src/pages/Reports.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "PDF (jspdf + jspdf-autotable), Excel (xlsx), Word (docx), TXT formatlarında rapor indirme özellikleri eklendi. Tüm raporlar (Stok Raporu, En Çok Satanlar, En Kârlılar) için 4 format seçeneği mevcut. Kütüphaneler yüklendi: jspdf@3.0.3, jspdf-autotable@5.0.2, xlsx@0.18.5, docx@9.5.1, file-saver@2.0.5. Her format için özel export fonksiyonları (exportToPDF, exportToExcel, exportToWord, exportToTxt) oluşturuldu."
+
+backend:
+  - task: "Müşteri Arama Endpoint"
+    implemented: true
+    working: true
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "GET /api/customers/search?q={query} endpoint'i eklendi. Hem isim hem telefon numarasında regex arama yapıyor (case-insensitive). Soft delete edilen müşterileri filtreler. 100 müşteriye kadar sonuç döndürüyor."
+
+  - task: "Ürün Filtreleme Endpoint"
+    implemented: true
+    working: true
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "GET /api/products/filters endpoint'i eklendi. Veritabanındaki benzersiz marka ve kategori listelerini döndürüyor. Alfabetik sıralı ve boş değerleri filtreler."
+
+  - task: "Stok Raporu Endpoint"
+    implemented: true
+    working: true
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "GET /api/reports/stock?brand=&category= endpoint'i eklendi. Optional marka ve kategori filtreleri ile ürünleri listeler. Her ürün için: name, barcode, brand, category, quantity, unit_type, min_quantity, purchase_price, sale_price, stock_value (hesaplanmış), status (Düşük Stok/Normal) bilgileri döner. Summary objesi: total_products, total_items, total_value, filters_applied içerir."
+
 metadata:
   created_by: "main_agent"
   version: "3.0"
