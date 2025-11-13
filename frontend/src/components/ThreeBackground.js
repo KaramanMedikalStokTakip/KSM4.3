@@ -142,6 +142,7 @@ function ThreeBackground({ isDark = false }) {
     window.addEventListener('resize', handleResize);
 
     // Start animation
+    console.log('[ThreeBackground] Starting animation...');
     animate();
 
     // Cleanup function
