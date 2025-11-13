@@ -7,8 +7,17 @@ function ThreeBackground({ isDark = false }) {
   const hasInitialized = useRef(false);
 
   useEffect(() => {
-    // Prevent double initialization in React StrictMode
-    if (hasInitialized.current || !containerRef.current) {
+    if (!containerRef.current) {
+      return;
+    }
+    
+    // Prevent double initialization in React StrictMode by checking if canvas already exists
+    if (containerRef.current.querySelector('canvas')) {
+      return;
+    }
+    
+    // Additional check using ref
+    if (hasInitialized.current) {
       return;
     }
     
