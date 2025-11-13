@@ -116,7 +116,7 @@ function Customers() {
 
   return (
     <div className="space-y-6" data-testid="customers-page">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center">
         <h1 className="text-4xl font-bold text-gray-800">Müşteri Yönetimi</h1>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
