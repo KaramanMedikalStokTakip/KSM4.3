@@ -301,16 +301,19 @@ function Settings() {
                       </div>
                       <div>
                         <Label>Rol *</Label>
-                        <select
-                          className="w-full border rounded-md px-3 py-2"
-                          value={newUser.role}
-                          onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
-                          data-testid="new-role-select"
+                        <Select 
+                          value={newUser.role} 
+                          onValueChange={(value) => setNewUser({ ...newUser, role: value })}
                         >
-                          <option value="yönetici">Yönetici</option>
-                          <option value="depo">Depo</option>
-                          <option value="satış">Satış</option>
-                        </select>
+                          <SelectTrigger data-testid="new-role-select">
+                            <SelectValue placeholder="Rol seçin" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="yönetici">Yönetici</SelectItem>
+                            <SelectItem value="depo">Depo</SelectItem>
+                            <SelectItem value="satış">Satış</SelectItem>
+                          </SelectContent>
+                        </Select>
                       </div>
                       <Button type="submit" className="w-full" data-testid="submit-user-btn">
                         Kullanıcı Ekle
