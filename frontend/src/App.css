@@ -406,7 +406,7 @@ body.dark-mode .border-blue-200 {
 
 /* Muted ve background renkleri dark mode */
 body.dark-mode .bg-muted {
-  background-color: #2d2d2d !important;
+  background-color: #374151 !important;
 }
 
 body.dark-mode .text-muted-foreground {
@@ -414,30 +414,34 @@ body.dark-mode .text-muted-foreground {
 }
 
 body.dark-mode .bg-background {
-  background-color: #1a1a1a !important;
+  background-color: #1f1f1f !important;
 }
 
 body.dark-mode .text-foreground {
-  color: #e5e5e5 !important;
-}
-
-/* Raporlar - Tabs dark mode */
-body.dark-mode [role="tablist"] {
-  background-color: #2d2d2d !important;
-}
-
-body.dark-mode [role="tablist"] button {
-  color: #9ca3af !important;
-}
-
-body.dark-mode [role="tablist"] button[data-state="active"] {
-  background-color: #2563eb !important;
   color: #ffffff !important;
-  font-weight: 600 !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
 }
 
-body.dark-mode [role="tablist"] button:hover:not([data-state="active"]) {
-  background-color: #404040 !important;
-  color: #d1d5db !important;
+/* Raporlar - Tabs dark mode - Çok spesifik selector'lar */
+body.dark-mode div[role="tablist"] {
+  background-color: #374151 !important;
+  border: 1px solid #4b5563 !important;
+}
+
+body.dark-mode div[role="tablist"] button[role="tab"] {
+  color: #9ca3af !important;
+  background-color: transparent !important;
+}
+
+body.dark-mode div[role="tablist"] button[role="tab"][data-state="active"],
+body.dark-mode div[role="tablist"] button[aria-selected="true"] {
+  background-color: #3b82f6 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.4) !important;
+  border: none !important;
+}
+
+body.dark-mode div[role="tablist"] button[role="tab"]:hover:not([data-state="active"]) {
+  background-color: #4b5563 !important;
+  color: #e5e7eb !important;
 }
