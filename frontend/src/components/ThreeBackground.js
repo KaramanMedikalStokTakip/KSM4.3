@@ -69,12 +69,19 @@ function ThreeBackground({ isDark = false }) {
     scene.add(linesMesh);
 
     // Animation loop
+    let frameCount = 0;
     const animate = () => {
       animationIdRef.current = requestAnimationFrame(animate);
 
       // Rotate particles
       particlesMesh.rotation.x += 0.005;
       particlesMesh.rotation.y += 0.005;
+      
+      // Debug: Log every 60 frames (about 1 second)
+      frameCount++;
+      if (frameCount % 60 === 0) {
+        console.log(`[Animation] Frame ${frameCount}, rotation: x=${particlesMesh.rotation.x.toFixed(3)}, y=${particlesMesh.rotation.y.toFixed(3)}`);
+      }
 
       // Mouse interaction
       camera.position.x += (mouseRef.current.x * 0.5 - camera.position.x) * 0.05;
