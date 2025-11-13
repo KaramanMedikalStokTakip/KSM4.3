@@ -215,15 +215,24 @@ function Dashboard() {
         </Card>
 
         <Card 
-          className="stat-card cursor-pointer hover:shadow-lg transition-shadow" 
+          className={`stat-card ${stats?.low_stock_count > 0 ? 'cursor-pointer hover:shadow-lg transition-shadow' : 'opacity-75'}`}
           data-testid="low-stock-card"
-          onClick={() => navigate('/stock')}
+          onClick={() => {
+            if (stats?.low_stock_count > 0) {
+              navigate('/stock');
+            } else {
+              toast.info('Düşük stokta ürün bulunmuyor! 🎉');
+            }
+          }}
         >
           <CardContent className="pt-4 sm:pt-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xs sm:text-sm text-gray-500">Düşük Stok</p>
                 <h3 className="text-2xl sm:text-3xl font-bold text-orange-600">{stats?.low_stock_count || 0}</h3>
+                {stats?.low_stock_count === 0 && (
+                  <p className="text-xs text-green-600 mt-1">✓ Hepsi yeterli</p>
+                )}
               </div>
               <div className="bg-orange-100 p-2 sm:p-3 rounded-full">
                 <TrendingDown className="w-5 h-5 sm:w-6 sm:h-6 text-orange-600" />
