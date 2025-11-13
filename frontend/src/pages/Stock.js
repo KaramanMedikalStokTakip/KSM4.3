@@ -1096,9 +1096,9 @@ function Stock() {
 
                 {/* Açıklama - Tam Metin */}
                 {selectedProductDetail.description && (
-                  <div className="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-                    <p className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Ürün Açıklaması:</p>
-                    <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap leading-relaxed">
+                  <div className="p-4 bg-blue-50 dark:bg-gray-800 border border-blue-200 dark:border-gray-700 rounded-lg">
+                    <p className="text-sm font-semibold text-gray-700 dark:text-white mb-2">Ürün Açıklaması:</p>
+                    <p className="text-sm text-gray-700 dark:text-gray-100 whitespace-pre-wrap leading-relaxed">
                       {selectedProductDetail.description}
                     </p>
                   </div>
