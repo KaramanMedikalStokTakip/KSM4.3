@@ -53,8 +53,8 @@ function ParticleNetworkAnimation({ isDark = false }) {
           if (distance < mouseRef.current.radius) {
             const angle = Math.atan2(dy, dx);
             const force = (mouseRef.current.radius - distance) / mouseRef.current.radius;
-            this.speedX = this.baseSpeedX + Math.cos(angle) * force * 5;
-            this.speedY = this.baseSpeedY + Math.sin(angle) * force * 5;
+            this.speedX = this.baseSpeedX + Math.cos(angle) * force * 3;
+            this.speedY = this.baseSpeedY + Math.sin(angle) * force * 3;
           } else {
             // Return to base speed gradually
             this.speedX += (this.baseSpeedX - this.speedX) * 0.05;
