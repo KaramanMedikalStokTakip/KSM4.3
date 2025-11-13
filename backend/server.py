@@ -541,6 +541,17 @@ async def get_top_profit(
     sorted_profits = sorted(product_profits.items(), key=lambda x: x[1]["total_profit"], reverse=True)[:limit]
     return [{"product_id": k, **v} for k, v in sorted_profits]
 
+@api_router.get("/products/filters")
+async def get_product_filters(current_user: User = Depends(get_current_user)):
+    """Ürünlerden benzersiz marka ve kategori listesini döndürür"""
+    brands = await db.products.distinct("brand")
+    categories = await db.products.distinct("category")
+    
+    return {
+        "brands": sorted([b for b in brands if b]),  # Boş olmayan markalar
+        "categories": sorted([c for c in categories if c])  # Boş olmayan kategoriler
+    }
+
 @api_router.get("/reports/stock")
 async def get_stock_report(
     brand: Optional[str] = Query(None, description="Marka filtresi"),
