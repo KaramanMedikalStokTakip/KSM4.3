@@ -103,6 +103,26 @@ function Login() {
     }
   };
 
+  const handleInstallPWA = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        toast.success('Uygulama başarıyla kuruldu!');
+      }
+      setDeferredPrompt(null);
+      setShowPWABanner(false);
+    } else {
+      // If beforeinstallprompt not available, show instructions
+      toast.info('Tarayıcınızın ayarlarından "Ana ekrana ekle" seçeneğini kullanabilirsiniz.');
+    }
+  };
+
+  const handleDismissPWA = () => {
+    setShowPWABanner(false);
+    localStorage.setItem('pwa-install-dismissed', Date.now().toString());
+  };
+
   return (
     <div className={`min-h-screen flex items-center justify-center p-4 relative overflow-hidden transition-colors duration-300 ${
       isDarkMode 
