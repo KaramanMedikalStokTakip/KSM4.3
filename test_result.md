@@ -202,7 +202,7 @@ frontend:
           agent: "main"
           comment: "PWAInstallBanner component'i oluşturuldu. Kullanıcıya PWA kurulumu için güzel bir banner gösteriliyor. 'Kur' butonu, 'Şimdi Değil' seçeneği, otomatik gizlenme (7 gün), zaten kuruluysa gösterilmiyor. App.js'e eklendi."
 
-  - task: "Stok Yönetimi - Ürün Detay Pop-up"
+  - task: "Stok Yönetimi - Ürün Detay Pop-up Dark Mode İyileştirmesi"
     implemented: true
     working: true
     file: "frontend/src/pages/Stock.js"
@@ -216,6 +216,33 @@ frontend:
         - working: true
           agent: "main"
           comment: "DARK MODE OKUNABILIRLIK İYILEŞTİRMESİ: Açıklama bölümünün dark mode renkleri güçlendirildi. Arka plan: dark:bg-gray-800 (koyu gri), border: dark:border-gray-700, başlık: dark:text-white, metin: dark:text-gray-100. Artık karanlık temada açıklama metni tam okunuyor."
+        - working: true
+          agent: "main"
+          comment: "İKİNCİ DARK MODE İYİLEŞTİRMESİ: Kullanıcı geri bildirimi sonrası açıklama bölümü daha da güçlendirildi. Arka plan dark:bg-gray-900 (çok koyu), border dark:border-gray-600, başlık ve metin dark:text-gray-50 (çok açık). Maksimum kontrast sağlanıyor."
+  
+  - task: "Made with Emergent Badge Kaldırma"
+    implemented: true
+    working: true
+    file: "frontend/public/index.html"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "Sayfanın sağ alt kısmında fixed position ile duran 'Made with Emergent' badge'i kaldırıldı. Badge mobilde diğer elemanların (PWA banner, butonlar vs) üstüne geliyordu ve kullanıcı deneyimini olumsuz etkiliyordu. (z-index: 9999 ile her şeyin üstündeydi)"
+  
+  - task: "Raporlar Sekmelerinde Dark Mode İyileştirmesi"
+    implemented: true
+    working: true
+    file: "frontend/src/components/ui/tabs.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "Raporlar sayfasındaki tabs (En Çok Satanlar, En Kârlılar) için dark mode'da aktif sekme görünürlüğü iyileştirildi. Dark mode'da aktif sekme için: dark:data-[state=active]:bg-blue-600 (mavi arka plan) ve dark:data-[state=active]:text-white (beyaz yazı) eklendi. Artık hangi sekmenin seçili olduğu açıkça görülüyor."
 
   - task: "Dashboard - Ürün Bul Görsel İyileştirmesi"
     implemented: true
