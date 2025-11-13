@@ -536,5 +536,49 @@ body.dark-mode [role="dialog"] button[type="button"]:has(svg) {
 
 body.dark-mode button[aria-label="Close"]:hover,
 body.dark-mode [role="dialog"] button[type="button"]:has(svg):hover {
-  background-color: rgba(75, 85, 99, 0.5) !important;
+  background-color: transparent !important;
+}
+
+/* ULTIMATE FIX - Tüm modal close butonları için agresif override */
+[role="dialog"] button,
+[role="dialog"] button[type="button"],
+div[role="dialog"] button,
+.fixed button[aria-label="Close"] {
+  background: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+body.dark-mode [role="dialog"] button,
+body.dark-mode [role="dialog"] button[type="button"],
+body.dark-mode div[role="dialog"] button,
+body.dark-mode .fixed button[aria-label="Close"] {
+  background: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Radix UI Dialog Close Button - En spesifik selector */
+button[data-radix-collection-item],
+button[type="button"][class*="absolute"][class*="right"],
+[data-radix-dialog-close] {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  min-width: unset !important;
+  min-height: unset !important;
+}
+
+body.dark-mode button[data-radix-collection-item],
+body.dark-mode button[type="button"][class*="absolute"][class*="right"],
+body.dark-mode [data-radix-dialog-close] {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
