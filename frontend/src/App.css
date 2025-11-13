@@ -404,6 +404,15 @@ body.dark-mode .border-blue-200 {
   border-color: #4a5568 !important;
 }
 
+/* Muted renkleri dark mode */
+body.dark-mode .bg-muted {
+  background-color: #2d2d2d !important;
+}
+
+body.dark-mode .text-muted-foreground {
+  color: #9ca3af !important;
+}
+
 /* Raporlar - Tabs dark mode */
 body.dark-mode [role="tablist"] {
   background-color: #2d2d2d !important;
