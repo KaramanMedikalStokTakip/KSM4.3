@@ -180,7 +180,8 @@ function ThreeBackground({ isDark = false }) {
 
     // Cleanup
     return () => {
-      isRunning = false;
+      console.log('ThreeBackground cleanup called');
+      isRunningRef.current = false;
       hasInitialized.current = false;
       
       document.removeEventListener('mousemove', handleMouseMove);
