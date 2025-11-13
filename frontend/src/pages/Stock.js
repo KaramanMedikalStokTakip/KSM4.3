@@ -1032,6 +1032,107 @@ function Stock() {
         </DialogContent>
       </Dialog>
 
+      {/* Product Detail Dialog */}
+      <Dialog open={productDetailDialogOpen} onOpenChange={setProductDetailDialogOpen}>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Ürün Detayları</DialogTitle>
+          </DialogHeader>
+          {selectedProductDetail && (
+            <div className="space-y-4">
+              {/* Ürün Görseli - Tam Boyut */}
+              {selectedProductDetail.image_url && (
+                <div className="relative w-full rounded-lg overflow-hidden bg-gray-100">
+                  <img 
+                    src={selectedProductDetail.image_url} 
+                    alt={selectedProductDetail.name} 
+                    className="w-full h-auto max-h-[500px] object-contain"
+                  />
+                </div>
+              )}
+
+              {/* Ürün Bilgileri */}
+              <div className="space-y-3">
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-800">{selectedProductDetail.name}</h3>
+                  <p className="text-lg text-gray-600 mt-1">
+                    {selectedProductDetail.brand} - {selectedProductDetail.category}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
+                  <div>
+                    <p className="text-sm text-gray-500">Barkod</p>
+                    <p className="text-base font-medium text-gray-800">{selectedProductDetail.barcode}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Stok Durumu</p>
+                    <p className={`text-base font-bold ${selectedProductDetail.quantity <= selectedProductDetail.min_quantity ? 'text-red-600' : 'text-green-600'}`}>
+                      {selectedProductDetail.quantity} {selectedProductDetail.unit_type || 'adet'}
+                      {selectedProductDetail.unit_type === 'kutu' && selectedProductDetail.package_quantity && (
+                        <span className="text-sm text-gray-500 ml-1">
+                          ({selectedProductDetail.quantity * selectedProductDetail.package_quantity} adet)
+                        </span>
+                      )}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Minimum Stok</p>
+                    <p className="text-base font-medium text-gray-800">{selectedProductDetail.min_quantity} {selectedProductDetail.unit_type || 'adet'}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Satış Fiyatı</p>
+                    <p className="text-xl font-bold text-blue-600">₺{selectedProductDetail.sale_price.toFixed(2)}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Alış Fiyatı</p>
+                    <p className="text-base font-medium text-gray-800">₺{selectedProductDetail.purchase_price.toFixed(2)}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Satış Birimi</p>
+                    <p className="text-base font-medium text-gray-800 capitalize">{selectedProductDetail.unit_type || 'adet'}</p>
+                  </div>
+                </div>
+
+                {/* Açıklama - Tam Metin */}
+                {selectedProductDetail.description && (
+                  <div className="p-4 bg-blue-50 rounded-lg">
+                    <p className="text-sm font-semibold text-gray-700 mb-2">Ürün Açıklaması:</p>
+                    <p className="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">
+                      {selectedProductDetail.description}
+                    </p>
+                  </div>
+                )}
+
+                {/* Aksiyon Butonları */}
+                <div className="flex gap-2 pt-2">
+                  <Button 
+                    className="flex-1" 
+                    onClick={() => {
+                      setProductDetailDialogOpen(false);
+                      handleEdit(selectedProductDetail);
+                    }}
+                  >
+                    <Edit className="w-4 h-4 mr-2" />
+                    Düzenle
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="flex-1"
+                    onClick={() => {
+                      setProductDetailDialogOpen(false);
+                      searchProductPrices(selectedProductDetail);
+                    }}
+                  >
+                    Fiyat Karşılaştır
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
       {/* Price Comparison Dialog */}
       <Dialog open={priceCompareDialogOpen} onOpenChange={setPriceCompareDialogOpen}>
         <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
