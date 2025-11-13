@@ -29,6 +29,20 @@ function Reports() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [stockReport, setStockReport] = useState(null);
 
+  useEffect(() => {
+    fetchFilters();
+  }, []);
+
+  const fetchFilters = async () => {
+    try {
+      const response = await axios.get(`${API}/products/filters`);
+      setBrands(response.data.brands);
+      setCategories(response.data.categories);
+    } catch (error) {
+      console.error('Filtreler yüklenemedi', error);
+    }
+  };
+
   const fetchTopSelling = async () => {
     if (!startDate || !endDate) {
       toast.error('Lütfen tarih aralığı seçin');
