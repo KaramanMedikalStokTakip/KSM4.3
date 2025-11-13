@@ -42,11 +42,27 @@
   body.dark-mode * {
     border-color: #374151 !important;
   }
+  
+  /* Background colors */
   body.dark-mode .bg-white {
     background-color: #2d3748 !important;
   }
   body.dark-mode .bg-gray-50 {
     background-color: #1a202c !important;
+  }
+  body.dark-mode .bg-gray-100 {
+    background-color: #2d3748 !important;
+  }
+  body.dark-mode .bg-gray-200 {
+    background-color: #374151 !important;
+  }
+  
+  /* Text colors - Fix black text visibility */
+  body.dark-mode .text-black {
+    color: #f7fafc !important;
+  }
+  body.dark-mode .text-gray-900 {
+    color: #f7fafc !important;
   }
   body.dark-mode .text-gray-800 {
     color: #e2e8f0 !important;
@@ -59,6 +75,80 @@
   }
   body.dark-mode .text-gray-500 {
     color: #718096 !important;
+  }
+  body.dark-mode .text-gray-400 {
+    color: #a0aec0 !important;
+  }
+  
+  /* Card and container styles */
+  body.dark-mode [class*=\"card\"] {
+    background-color: #2d3748 !important;
+    border-color: #4a5568 !important;
+  }
+  
+  /* Input and form elements */
+  body.dark-mode input,
+  body.dark-mode textarea,
+  body.dark-mode select {
+    background-color: #374151 !important;
+    color: #ffffff !important;
+    border-color: #4a5568 !important;
+  }
+  
+  body.dark-mode input::placeholder,
+  body.dark-mode textarea::placeholder {
+    color: #9ca3af !important;
+  }
+  
+  /* Buttons */
+  body.dark-mode button:not([class*=\"bg-blue\"]):not([class*=\"bg-green\"]):not([class*=\"bg-red\"]):not([class*=\"bg-yellow\"]) {
+    background-color: #374151 !important;
+    color: #ffffff !important;
+  }
+  
+  /* Tables */
+  body.dark-mode table {
+    background-color: #2d3748 !important;
+  }
+  
+  body.dark-mode thead {
+    background-color: #374151 !important;
+  }
+  
+  body.dark-mode tbody tr {
+    border-color: #4a5568 !important;
+  }
+  
+  body.dark-mode tbody tr:hover {
+    background-color: #374151 !important;
+  }
+  
+  /* Modals and dialogs */
+  body.dark-mode [role=\"dialog\"],
+  body.dark-mode [role=\"alertdialog\"] {
+    background-color: #2d3748 !important;
+    color: #ffffff !important;
+  }
+  
+  /* Dropdowns and popovers */
+  body.dark-mode [role=\"menu\"],
+  body.dark-mode [role=\"listbox\"] {
+    background-color: #374151 !important;
+    color: #ffffff !important;
+    border-color: #4a5568 !important;
+  }
+  
+  /* Scrollbars */
+  body.dark-mode ::-webkit-scrollbar {
+    background-color: #2d3748;
+  }
+  
+  body.dark-mode ::-webkit-scrollbar-thumb {
+    background-color: #4a5568;
+  }
+  
+  body.dark-mode ::-webkit-scrollbar-thumb:hover {
+    background-color: #6b7280;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Space Grotesk', sans-serif;
