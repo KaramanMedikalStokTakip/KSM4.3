@@ -246,13 +246,30 @@ body.dark-mode .modal {
   color: #e5e5e5 !important;
 }
 
-/* Button'lar - İkon butonları hariç */
-body.dark-mode button:not(.bg-blue-600):not(.bg-red-600):not(.bg-green-600):not(.bg-yellow-500):not(.bg-indigo-600):not([aria-label="Close"]):not([aria-label="Kapat"]):not([aria-label="Toggle theme"]):not([aria-label="Şifreyi göster"]):not([aria-label="Şifreyi gizle"]):not([data-testid="toggle-password-btn"]) {
+/* Button'lar - Dark mode gradient desteği */
+body.dark-mode button.inline-flex {
+  /* Gradient butonlar için özel destek - inline-flex class'ı olan butonlar */
+}
+
+/* Outline ve secondary butonlar dark mode */
+body.dark-mode button[class*="border-gray"] {
+  background-color: #2d2d2d !important;
+  border-color: #4b5563 !important;
   color: #e5e5e5 !important;
 }
 
-body.dark-mode button:hover:not(.bg-blue-600):not(.bg-red-600):not(.bg-green-600):not([aria-label="Close"]):not([aria-label="Kapat"]):not([aria-label="Toggle theme"]):not([aria-label="Şifreyi göster"]):not([aria-label="Şifreyi gizle"]):not([data-testid="toggle-password-btn"]) {
-  background-color: #333333;
+body.dark-mode button[class*="border-gray"]:hover {
+  background-color: #374151 !important;
+  border-color: #6b7280 !important;
+}
+
+body.dark-mode button[class*="bg-gray"] {
+  background-color: #374151 !important;
+  color: #e5e5e5 !important;
+}
+
+body.dark-mode button[class*="bg-gray"]:hover {
+  background-color: #4b5563 !important;
 }
 
 /* İkon butonları dark mode - TAMAMEN TRANSPARAN */
