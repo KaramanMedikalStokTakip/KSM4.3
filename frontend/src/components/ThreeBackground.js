@@ -17,6 +17,48 @@ function ThreeBackground({ isDark = false }) {
 
     // Check if already initialized (prevent double init in StrictMode)
     if (sceneRef.current) {
+      // Scene already exists, just restart animation
+      if (!isAnimatingRef.current && animationIdRef.current === null) {
+        isAnimatingRef.current = true;
+        const animate = () => {
+          if (!isAnimatingRef.current) return;
+          if (!sceneRef.current || !particlesMeshRef.current || !linesMeshRef.current || 
+              !rendererRef.current || !cameraRef.current) return;
+          
+          animationIdRef.current = requestAnimationFrame(animate);
+          
+          particlesMeshRef.current.rotation.x += 0.005;
+          particlesMeshRef.current.rotation.y += 0.005;
+          
+          cameraRef.current.position.x += (mouseRef.current.x * 0.5 - cameraRef.current.position.x) * 0.05;
+          cameraRef.current.position.y += (-mouseRef.current.y * 0.5 - cameraRef.current.position.y) * 0.05;
+          cameraRef.current.lookAt(sceneRef.current.position);
+          
+          const positions = particlesMeshRef.current.geometry.attributes.position.array;
+          const linePositions = [];
+          const particlesCount = positions.length / 3;
+          
+          for (let i = 0; i < particlesCount; i++) {
+            for (let j = i + 1; j < particlesCount; j++) {
+              const x1 = positions[i * 3];
+              const y1 = positions[i * 3 + 1];
+              const z1 = positions[i * 3 + 2];
+              const x2 = positions[j * 3];
+              const y2 = positions[j * 3 + 1];
+              const z2 = positions[j * 3 + 2];
+              const dist = Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2) + Math.pow(z1 - z2, 2));
+              if (dist < 120) {
+                linePositions.push(x1, y1, z1, x2, y2, z2);
+              }
+            }
+          }
+          
+          linesMeshRef.current.geometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+          linesMeshRef.current.rotation.copy(particlesMeshRef.current.rotation);
+          rendererRef.current.render(sceneRef.current, cameraRef.current);
+        };
+        animate();
+      }
       return;
     }
 
