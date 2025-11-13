@@ -247,14 +247,15 @@ metadata:
 
 test_plan:
   current_focus:
-    - "PWA Service Worker"
-    - "PWA Install Banner"
-    - "Offline Sayfası"
+    - "Stok Yönetimi - Ürün Detay Pop-up"
+    - "Dashboard - Ürün Bul Görsel İyileştirmesi"
+    - "Dashboard - Düşük Stok Kartı Uyarı Sistemi"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
   backend_testing_complete: true
   pwa_features_complete: true
+  ui_improvements_complete: true
 
 agent_communication:
     - agent: "main"
