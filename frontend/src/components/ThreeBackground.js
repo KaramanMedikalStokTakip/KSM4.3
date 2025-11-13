@@ -72,9 +72,9 @@ function ThreeBackground({ isDark = false }) {
     const animate = () => {
       animationIdRef.current = requestAnimationFrame(animate);
 
-      // Rotate particles
-      particlesMesh.rotation.x += 0.005;
-      particlesMesh.rotation.y += 0.005;
+      // Rotate particles - increased for visible animation
+      particlesMesh.rotation.x += 0.02;
+      particlesMesh.rotation.y += 0.02;
 
       // Mouse interaction
       camera.position.x += (mouseRef.current.x * 0.5 - camera.position.x) * 0.05;
