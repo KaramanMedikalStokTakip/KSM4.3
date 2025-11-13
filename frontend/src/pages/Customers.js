@@ -181,8 +181,38 @@ function Customers() {
         </Dialog>
       </div>
 
+      <Card>
+        <CardContent className="pt-6">
+          <div className="flex gap-2 items-center">
+            <Search className="w-5 h-5 text-gray-400" />
+            <Input
+              placeholder="İsim veya telefon numarası ile ara..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="flex-1"
+              data-testid="customer-search-input"
+            />
+            {searchQuery && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setSearchQuery('')}
+              >
+                Temizle
+              </Button>
+            )}
+          </div>
+          {isSearching && (
+            <p className="text-sm text-gray-500 mt-2">Aranıyor...</p>
+          )}
+          {searchQuery && filteredCustomers.length === 0 && !isSearching && (
+            <p className="text-sm text-gray-500 mt-2">Sonuç bulunamadı</p>
+          )}
+        </CardContent>
+      </Card>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {customers.map((customer) => (
+        {filteredCustomers.map((customer) => (
           <Card key={customer.id} className="card-hover" data-testid={`customer-card-${customer.id}`}>
             <CardContent className="pt-6">
               <h3 className="font-semibold text-lg text-gray-800 mb-2">{customer.name}</h3>
