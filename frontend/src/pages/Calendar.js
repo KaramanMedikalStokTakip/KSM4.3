@@ -8,7 +8,7 @@ import { Textarea } from '../components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../components/ui/dialog';
 import { Label } from '../components/ui/label';
-import { Calendar as CalendarIcon, Plus, Bell, Trash2 } from 'lucide-react';
+import { Calendar as CalendarIcon, Plus, Bell, Trash2, Edit } from 'lucide-react';
 import { Calendar as CalendarComponent } from '../components/ui/calendar';
 
 function Calendar() {
