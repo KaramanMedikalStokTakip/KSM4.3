@@ -719,6 +719,7 @@ function Stock() {
               </form>
             </DialogContent>
           </Dialog>
+          )}
         </div>
       </div>
 
