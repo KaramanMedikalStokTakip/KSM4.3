@@ -109,6 +109,7 @@ function Reports() {
     if (window.confirm('En çok satanlar raporunu temizlemek istediğinizden emin misiniz?')) {
       setTopSelling([]);
       localStorage.removeItem('savedTopSelling');
+      localStorage.removeItem('savedTopSellingMeta');
       toast.success('Rapor temizlendi');
     }
   };
