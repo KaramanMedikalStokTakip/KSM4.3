@@ -892,6 +892,205 @@ async def delete_calendar_event(event_id: str, current_user: User = Depends(get_
         raise HTTPException(status_code=404, detail="Event not found")
     return {"message": "Event deleted"}
 
+# Test data seeding endpoint
+@api_router.post("/admin/seed-test-data")
+async def seed_test_data(current_user: User = Depends(get_current_user)):
+    """Seed database with test data: 5 medical products, 5 customers, 5 events"""
+    if current_user.role != "yönetici":
+        raise HTTPException(status_code=403, detail="Sadece yöneticiler test verileri ekleyebilir")
+    
+    # 5 medikal ürünler
+    medical_products = [
+        {
+            "id": str(uuid.uuid4()),
+            "name": "Dijital Tansiyon Aleti",
+            "barcode": "8691234567890",
+            "brand": "Omron",
+            "category": "Medikal Cihaz",
+            "quantity": 15,
+            "min_quantity": 5,
+            "purchase_price": 350.00,
+            "sale_price": 499.00,
+            "description": "Otomatik dijital tansiyon ölçüm cihazı, koldan ölçüm, hafızalı",
+            "unit_type": "adet",
+            "created_at": datetime.now(timezone.utc),
+            "image_url": ""
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "name": "İnfrared Ateş Ölçer",
+            "barcode": "8691234567891",
+            "brand": "Braun",
+            "category": "Medikal Cihaz",
+            "quantity": 8,
+            "min_quantity": 10,
+            "purchase_price": 180.00,
+            "sale_price": 289.00,
+            "description": "Temassız infrared termometre, hızlı ve hassas ölçüm",
+            "unit_type": "adet",
+            "created_at": datetime.now(timezone.utc),
+            "image_url": ""
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "name": "Steril Eldiven",
+            "barcode": "8691234567892",
+            "brand": "Medline",
+            "category": "Medikal Sarf",
+            "quantity": 50,
+            "min_quantity": 20,
+            "purchase_price": 25.00,
+            "sale_price": 45.00,
+            "description": "Lateks steril eldiven, tek kullanımlık, medium boy",
+            "unit_type": "kutu",
+            "package_quantity": 100,
+            "created_at": datetime.now(timezone.utc),
+            "image_url": ""
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "name": "Nebulizatör Cihazı",
+            "barcode": "8691234567893",
+            "brand": "Beurer",
+            "category": "Medikal Cihaz",
+            "quantity": 3,
+            "min_quantity": 5,
+            "purchase_price": 420.00,
+            "sale_price": 649.00,
+            "description": "Kompresörlü nebulizatör, solunum tedavisi için",
+            "unit_type": "adet",
+            "created_at": datetime.now(timezone.utc),
+            "image_url": ""
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "name": "Kan Şekeri Test Çubuğu",
+            "barcode": "8691234567894",
+            "brand": "Accu-Chek",
+            "category": "Medikal Sarf",
+            "quantity": 25,
+            "min_quantity": 15,
+            "purchase_price": 85.00,
+            "sale_price": 135.00,
+            "description": "50 adet test çubuğu, glikoz ölçümü için",
+            "unit_type": "kutu",
+            "package_quantity": 50,
+            "created_at": datetime.now(timezone.utc),
+            "image_url": ""
+        }
+    ]
+    
+    # 5 müşteriler
+    customers = [
+        {
+            "id": str(uuid.uuid4()),
+            "name": "Ayşe Yılmaz",
+            "phone": "05321234567",
+            "email": "ayse.yilmaz@email.com",
+            "address": "Kadıköy, İstanbul",
+            "notes": "Kurumsal müşteri, aylık sipariş",
+            "is_deleted": False,
+            "created_at": datetime.now(timezone.utc)
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "name": "Mehmet Demir",
+            "phone": "05339876543",
+            "email": "mehmet.demir@email.com",
+            "address": "Çankaya, Ankara",
+            "notes": "Toptan alım yapar",
+            "is_deleted": False,
+            "created_at": datetime.now(timezone.utc)
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "name": "Fatma Şahin",
+            "phone": "05447891234",
+            "email": "fatma.sahin@email.com",
+            "address": "Konak, İzmir",
+            "notes": "Perakende müşteri",
+            "is_deleted": False,
+            "created_at": datetime.now(timezone.utc)
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "name": "Ali Kara",
+            "phone": "05551234567",
+            "email": "ali.kara@email.com",
+            "address": "Nilüfer, Bursa",
+            "notes": "Kurumsal anlaşma var",
+            "is_deleted": False,
+            "created_at": datetime.now(timezone.utc)
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "name": "Zeynep Arslan",
+            "phone": "05667894561",
+            "email": "zeynep.arslan@email.com",
+            "address": "Seyhan, Adana",
+            "notes": "Aylık düzenli alım",
+            "is_deleted": False,
+            "created_at": datetime.now(timezone.utc)
+        }
+    ]
+    
+    # 5 etkinlikler (önümüzdeki günlerde)
+    today = datetime.now(timezone.utc)
+    events = [
+        {
+            "id": str(uuid.uuid4()),
+            "title": "Stok Sayımı",
+            "description": "Aylık rutin stok sayımı yapılacak",
+            "date": (today + timedelta(days=2)).replace(hour=10, minute=0, second=0, microsecond=0),
+            "alarm": True,
+            "created_at": datetime.now(timezone.utc)
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "title": "Tedarikçi Toplantısı",
+            "description": "Yeni medikal ürün tedarikçisi ile görüşme",
+            "date": (today + timedelta(days=5)).replace(hour=14, minute=30, second=0, microsecond=0),
+            "alarm": True,
+            "created_at": datetime.now(timezone.utc)
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "title": "Fiyat Güncellemesi",
+            "description": "Mevsimsel fiyat güncellemelerini uygula",
+            "date": (today + timedelta(days=7)).replace(hour=9, minute=0, second=0, microsecond=0),
+            "alarm": False,
+            "created_at": datetime.now(timezone.utc)
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "title": "Müşteri Ziyareti",
+            "description": "Büyük müşteri için tanıtım sunumu",
+            "date": (today + timedelta(days=10)).replace(hour=15, minute=0, second=0, microsecond=0),
+            "alarm": True,
+            "created_at": datetime.now(timezone.utc)
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "title": "Ürün Eğitimi",
+            "description": "Yeni nebulizatör cihazları için personel eğitimi",
+            "date": (today + timedelta(days=14)).replace(hour=11, minute=0, second=0, microsecond=0),
+            "alarm": False,
+            "created_at": datetime.now(timezone.utc)
+        }
+    ]
+    
+    # Insert data
+    await db.products.insert_many(medical_products)
+    await db.customers.insert_many(customers)
+    await db.calendar.insert_many(events)
+    
+    return {
+        "message": "Test verileri başarıyla eklendi",
+        "products_added": len(medical_products),
+        "customers_added": len(customers),
+        "events_added": len(events)
+    }
+
 # Include the router in the main app
 app.include_router(api_router)
 
