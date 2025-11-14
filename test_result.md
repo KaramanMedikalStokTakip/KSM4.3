@@ -118,6 +118,54 @@ backend:
           comment: "PWA için backend tarafında değişiklik gerekmedi. Mevcut API'ler PWA ile uyumlu."
 
 frontend:
+  - task: "Düşük Stok Filtreleme ve Yönlendirme"
+    implemented: true
+    working: "NA"
+    file: "frontend/src/pages/Dashboard.js, frontend/src/pages/Stock.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Dashboard'da düşük stok kartına tıklayınca /stock?filter=low-stock URL'sine yönlendirme eklendi. Stock.js'te URL parametresini okuyup düşük stok filtresi uygulanıyor. location hooks kullanıldı."
+
+  - task: "Stok Yönetimi - Barkod ve Açıklama Tıklanabilir"
+    implemented: true
+    working: "NA"
+    file: "frontend/src/pages/Stock.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Grid ve liste görünümlerinde barkod ve açıklama alanları tıklanabilir yapıldı. Resim olmasa bile barkod veya açıklamaya tıklayınca openProductDetail fonksiyonu çağrılıyor ve ürün detay pop-up açılıyor. Hover efektleri eklendi."
+
+  - task: "Word İndirme Kaldırılması"
+    implemented: true
+    working: true
+    file: "frontend/src/pages/Reports.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "exportToWord fonksiyonu tamamen kaldırıldı. Tüm Word indirme butonları (Stok Raporu, En Çok Satanlar, En Karlılar sayfalarından) silindi. docx ve file-saver import'ları kaldırıldı. Sadece PDF, Excel ve TXT indirme seçenekleri kaldı."
+
+  - task: "Etkinlik Detayında Düzenleme Butonu"
+    implemented: true
+    working: "NA"
+    file: "frontend/src/pages/Calendar.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Etkinlik detay dialoguna 'Düzenle' butonu eklendi. handleEditEvent fonksiyonu oluşturuldu - detail dialogunu kapatıp form dialogunu etkinlik verileriyle dolu halde açıyor. Edit icon import edildi. Butonlar: Kapat, Düzenle, Sil."
+
   - task: "PWA Manifest Dosyası"
     implemented: true
     working: true
