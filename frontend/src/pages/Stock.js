@@ -897,8 +897,14 @@ function Stock() {
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {product.category}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {product.barcode}
+                      <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        <div
+                          className="text-gray-500 cursor-pointer hover:text-blue-600 hover:underline"
+                          onClick={() => openProductDetail(product)}
+                          title="Detayları görmek için tıklayın"
+                        >
+                          {product.barcode}
+                        </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className={`text-sm font-medium ${product.quantity <= product.min_quantity ? 'text-red-600' : 'text-green-600'}`}>
