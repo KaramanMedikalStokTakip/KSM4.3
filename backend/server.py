@@ -1092,7 +1092,7 @@ async def seed_test_data(current_user: User = Depends(get_current_user)):
     # Insert data
     await db.products.insert_many(medical_products)
     await db.customers.insert_many(customers)
-    await db.calendar.insert_many(events)
+    await db.calendar_events.insert_many(events)
     
     return {
         "message": "Test verileri başarıyla eklendi",
