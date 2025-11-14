@@ -91,6 +91,12 @@ function Stock() {
   const applyFilters = () => {
     let filtered = [...products];
 
+    // URL parametresinden düşük stok filtresi kontrolü
+    const params = new URLSearchParams(location.search);
+    if (params.get('filter') === 'low-stock') {
+      filtered = filtered.filter(p => p.quantity <= p.min_quantity);
+    }
+
     if (filters.name) {
       filtered = filtered.filter(p => 
         p.name.toLowerCase().includes(filters.name.toLowerCase())
