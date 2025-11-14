@@ -32,8 +32,8 @@ const ROLE_PERMISSIONS = {
   'depo': {
     dashboard: true,
     stock_view: true,
-    stock_add: true,
-    stock_edit: true,
+    stock_add: false,
+    stock_edit: false,
     stock_delete: false,
     view_purchase_price: false,
     pos: false,
