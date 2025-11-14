@@ -125,10 +125,19 @@ function Reports() {
       if (selectedCategory) params.category = selectedCategory;
 
       const response = await axios.get(`${API}/reports/stock`, { params });
-      setStockReport(response.data);
       
-      // Save to localStorage
-      localStorage.setItem('savedStockReport', JSON.stringify(response.data));
+      // Tarih ve saat bilgisi ekle
+      const reportWithTimestamp = {
+        ...response.data,
+        createdAt: new Date().toISOString(),
+        createdDate: new Date().toLocaleDateString('tr-TR'),
+        createdTime: new Date().toLocaleTimeString('tr-TR')
+      };
+      
+      setStockReport(reportWithTimestamp);
+      
+      // localStorage'a kaydet
+      localStorage.setItem('savedStockReport', JSON.stringify(reportWithTimestamp));
       
       toast.success('Stok raporu oluşturuldu');
     } catch (error) {
