@@ -219,7 +219,7 @@ function Dashboard() {
           data-testid="low-stock-card"
           onClick={() => {
             if (stats?.low_stock_count > 0) {
-              navigate('/stock');
+              navigate('/stock?filter=low-stock');
             } else {
               toast.info('Düşük stokta ürün bulunmuyor! 🎉');
             }
