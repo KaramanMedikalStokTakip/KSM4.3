@@ -494,14 +494,13 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Kullanıcı Düzenleme Endpoint"
     - "Kullanıcı Düzenleme Özelliği"
     - "Stok Yetkilendirme - Depo ve Satış"
     - "Çoklu Format Rapor İndirme (PDF/TXT Hata Düzeltmesi)"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
-  backend_testing_complete: false
+  backend_testing_complete: true
   pwa_features_complete: true
   ui_improvements_complete: false
   report_improvements_complete: true
