@@ -105,6 +105,18 @@
 user_problem_statement: "Uygulama İyileştirmeleri: 1) Düşük stok kartına tıklayınca sadece düşük stok ürünlerinin gösterilmesi, 2) Stok yönetiminde resim olmasa bile barkod ve açıklamaya tıklayınca ürün detayı açılması, 3) PDF indirme hatası düzeltmesi, 4) Word indirme özelliğinin kaldırılması, 5) Etkinlik detayında düzenleme butonu eklenmesi, 6) Test için medikal ürünler, müşteriler ve etkinlikler eklenmesi"
 
 backend:
+  - task: "Test Verileri Seed Endpoint"
+    implemented: true
+    working: "NA"
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "POST /api/admin/seed-test-data endpoint'i eklendi. Sadece yönetici erişebilir. 5 medikal ürün (Dijital Tansiyon Aleti, İnfrared Ateş Ölçer, Steril Eldiven, Nebulizatör, Kan Şekeri Test Çubuğu), 5 müşteri (Ayşe Yılmaz, Mehmet Demir, Fatma Şahin, Ali Kara, Zeynep Arslan), 5 etkinlik (Stok Sayımı, Tedarikçi Toplantısı, Fiyat Güncellemesi, Müşteri Ziyareti, Ürün Eğitimi) ekliyor. Ürünlerden bazıları düşük stokta."
+
   - task: "PWA Backend Hazırlık (Değişiklik Yok)"
     implemented: true
     working: true
