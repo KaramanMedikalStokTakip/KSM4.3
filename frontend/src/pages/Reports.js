@@ -388,7 +388,7 @@ function Reports() {
             </CardContent>
           </Card>
 
-          {stockReport && (
+          {stockReport && stockReport.products && (
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
                 <div>
@@ -413,15 +413,15 @@ function Reports() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                   <div className="bg-blue-50 p-4 rounded-lg">
                     <p className="text-sm text-gray-600">Toplam Ürün</p>
-                    <p className="text-2xl font-bold text-blue-600">{stockReport.summary.total_products}</p>
+                    <p className="text-2xl font-bold text-blue-600">{stockReport.summary?.total_products || 0}</p>
                   </div>
                   <div className="bg-green-50 p-4 rounded-lg">
                     <p className="text-sm text-gray-600">Toplam Adet</p>
-                    <p className="text-2xl font-bold text-green-600">{stockReport.summary.total_items}</p>
+                    <p className="text-2xl font-bold text-green-600">{stockReport.summary?.total_items || 0}</p>
                   </div>
                   <div className="bg-purple-50 p-4 rounded-lg">
                     <p className="text-sm text-gray-600">Toplam Değer</p>
-                    <p className="text-2xl font-bold text-purple-600">₺{stockReport.summary.total_value.toFixed(2)}</p>
+                    <p className="text-2xl font-bold text-purple-600">₺{(stockReport.summary?.total_value || 0).toFixed(2)}</p>
                   </div>
                 </div>
 
@@ -430,6 +430,7 @@ function Reports() {
                     variant="outline"
                     size="sm"
                     onClick={() => exportToExcel(stockReport.products, 'stok-raporu')}
+                    disabled={!stockReport.products || stockReport.products.length === 0}
                   >
                     <FileSpreadsheet className="w-4 h-4 mr-2" />
                     Excel
@@ -438,6 +439,7 @@ function Reports() {
                     variant="outline"
                     size="sm"
                     onClick={() => exportToPDF(stockReport.products, 'stok-raporu', 'Stok Yönetim Raporu')}
+                    disabled={!stockReport.products || stockReport.products.length === 0}
                   >
                     <FileText className="w-4 h-4 mr-2" />
                     PDF
@@ -446,6 +448,7 @@ function Reports() {
                     variant="outline"
                     size="sm"
                     onClick={() => exportToTxt(stockReport.products, 'stok-raporu', 'Stok Yönetim Raporu')}
+                    disabled={!stockReport.products || stockReport.products.length === 0}
                   >
                     <Download className="w-4 h-4 mr-2" />
                     TXT
