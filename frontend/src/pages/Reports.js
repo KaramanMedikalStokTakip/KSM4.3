@@ -432,14 +432,6 @@ function Reports() {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => exportToWord(stockReport.products, 'stok-raporu', 'Stok Yönetim Raporu')}
-                  >
-                    <FileType className="w-4 h-4 mr-2" />
-                    Word
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
                     onClick={() => exportToTxt(stockReport.products, 'stok-raporu', 'Stok Yönetim Raporu')}
                   >
                     <Download className="w-4 h-4 mr-2" />
