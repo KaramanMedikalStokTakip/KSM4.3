@@ -70,6 +70,18 @@ function Calendar() {
     setDetailDialogOpen(true);
   };
 
+  const handleEditEvent = (event) => {
+    setDetailDialogOpen(false);
+    const dateStr = new Date(event.date).toISOString().slice(0, 16);
+    setFormData({
+      title: event.title,
+      description: event.description || '',
+      date: dateStr,
+      alarm: event.alarm || false
+    });
+    setDialogOpen(true);
+  };
+
   const resetForm = () => {
     setFormData({ title: '', description: '', date: '', alarm: false });
   };
