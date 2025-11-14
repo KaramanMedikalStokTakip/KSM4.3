@@ -1157,16 +1157,18 @@ function Stock() {
 
                 {/* Aksiyon Butonları */}
                 <div className="flex gap-2 pt-2">
-                  <Button 
-                    className="flex-1" 
-                    onClick={() => {
-                      setProductDetailDialogOpen(false);
-                      handleEdit(selectedProductDetail);
-                    }}
-                  >
-                    <Edit className="w-4 h-4 mr-2" />
-                    Düzenle
-                  </Button>
+                  {user?.role === 'yönetici' && (
+                    <Button 
+                      className="flex-1" 
+                      onClick={() => {
+                        setProductDetailDialogOpen(false);
+                        handleEdit(selectedProductDetail);
+                      }}
+                    >
+                      <Edit className="w-4 h-4 mr-2" />
+                      Düzenle
+                    </Button>
+                  )}
                   <Button 
                     variant="outline" 
                     className="flex-1"
