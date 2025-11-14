@@ -28,6 +28,7 @@ function Reports() {
   const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [stockReport, setStockReport] = useState(null);
+  const [reportHistory, setReportHistory] = useState([]);
 
   useEffect(() => {
     fetchFilters();
