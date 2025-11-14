@@ -270,54 +270,6 @@ function Reports() {
     }
   };
 
-  const exportToWord = async (data, filename, title) => {
-    try {
-      const headers = Object.keys(data[0] || {});
-      
-      // Tablo başlık satırı
-      const headerRow = new TableRow({
-        children: headers.map(h => new TableCell({
-          children: [new Paragraph({ text: h, bold: true })],
-          width: { size: 100 / headers.length, type: WidthType.PERCENTAGE }
-        }))
-      });
-      
-      // Veri satırları
-      const dataRows = data.map(item => 
-        new TableRow({
-          children: Object.values(item).map(val => 
-            new TableCell({
-              children: [new Paragraph(String(val || ''))],
-              width: { size: 100 / headers.length, type: WidthType.PERCENTAGE }
-            })
-          )
-        })
-      );
-      
-      const table = new Table({
-        rows: [headerRow, ...dataRows],
-        width: { size: 100, type: WidthType.PERCENTAGE }
-      });
-      
-      const doc = new Document({
-        sections: [{
-          children: [
-            new Paragraph({ text: title, heading: 'Heading1' }),
-            new Paragraph({ text: `Oluşturma Tarihi: ${new Date().toLocaleDateString('tr-TR')}` }),
-            new Paragraph({ text: '' }),
-            table
-          ]
-        }]
-      });
-      
-      const blob = await Packer.toBlob(doc);
-      saveAs(blob, `${filename}.docx`);
-      toast.success('Word raporu indirildi');
-    } catch (error) {
-      toast.error('Word dışa aktarma başarısız');
-    }
-  };
-
   const exportToTxt = (data, filename, title) => {
     try {
       let content = `${title}\n`;
