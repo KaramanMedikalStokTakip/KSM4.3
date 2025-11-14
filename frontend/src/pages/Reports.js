@@ -118,6 +118,7 @@ function Reports() {
     if (window.confirm('En karlılar raporunu temizlemek istediğinizden emin misiniz?')) {
       setTopProfit([]);
       localStorage.removeItem('savedTopProfit');
+      localStorage.removeItem('savedTopProfitMeta');
       toast.success('Rapor temizlendi');
     }
   };
