@@ -46,6 +46,31 @@ function Reports() {
     }
   };
 
+  const loadReportHistory = () => {
+    try {
+      const history = localStorage.getItem('reportHistory');
+      if (history) {
+        setReportHistory(JSON.parse(history));
+      }
+    } catch (error) {
+      console.error('Rapor geçmişi yüklenemedi', error);
+    }
+  };
+
+  const loadSavedReports = () => {
+    try {
+      const savedStock = localStorage.getItem('savedStockReport');
+      const savedSelling = localStorage.getItem('savedTopSelling');
+      const savedProfit = localStorage.getItem('savedTopProfit');
+      
+      if (savedStock) setStockReport(JSON.parse(savedStock));
+      if (savedSelling) setTopSelling(JSON.parse(savedSelling));
+      if (savedProfit) setTopProfit(JSON.parse(savedProfit));
+    } catch (error) {
+      console.error('Kaydedilmiş raporlar yüklenemedi', error);
+    }
+  };
+
   const fetchTopSelling = async () => {
     if (!startDate || !endDate) {
       toast.error('Lütfen tarih aralığı seçin');
