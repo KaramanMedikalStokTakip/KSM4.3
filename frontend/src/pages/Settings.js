@@ -155,6 +155,37 @@ function Settings() {
     }
   };
 
+  const handleEditUserClick = (u) => {
+    setEditingUser(u);
+    setEditUser({
+      username: u.username,
+      email: u.email || '',
+      password: '', // Boş bırak - değiştirilirse doldurulur
+      role: u.role
+    });
+    setEditDialogOpen(true);
+  };
+
+  const handleUpdateUser = async (e) => {
+    e.preventDefault();
+    try {
+      // Sadece değişen alanları gönder
+      const updateData = {};
+      if (editUser.username !== editingUser.username) updateData.username = editUser.username;
+      if (editUser.email !== editingUser.email) updateData.email = editUser.email;
+      if (editUser.password) updateData.password = editUser.password; // Sadece doldurulduysa
+      if (editUser.role !== editingUser.role) updateData.role = editUser.role;
+
+      await axios.put(`${API}/users/${editingUser.id}`, updateData);
+      toast.success('Kullanıcı başarıyla güncellendi');
+      fetchUsers();
+      setEditDialogOpen(false);
+      setEditingUser(null);
+    } catch (error) {
+      toast.error(error.response?.data?.detail || 'Kullanıcı güncellenemedi');
+    }
+  };
+
   const handleDeleteUser = async (userId) => {
     if (userId === user.id) {
       toast.error('Kendi hesabınızı silemezsiniz');
