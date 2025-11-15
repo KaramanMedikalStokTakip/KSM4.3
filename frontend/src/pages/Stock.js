@@ -378,7 +378,12 @@ function Stock() {
       // Get real price comparison from backend
       const response = await axios.get(`${API}/products/${product.id}/price-comparison`);
       
+      console.log('Price comparison response:', response.data);
+      console.log('Price results:', response.data.price_results);
+      
       if (response.data.price_results && response.data.price_results.length > 0) {
+        // Log first result to check URL
+        console.log('First result URL:', response.data.price_results[0]?.url);
         setPriceResults(response.data.price_results);
         toast.success(`${response.data.result_count} site üzerinden fiyat karşılaştırması yapıldı`);
       } else if (response.data.error) {
@@ -390,6 +395,7 @@ function Stock() {
         setPriceResults([]);
       }
     } catch (error) {
+      console.error('Price comparison error:', error);
       toast.error('Fiyat karşılaştırması başarısız');
       setPriceResults([]);
     } finally {
