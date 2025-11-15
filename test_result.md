@@ -169,17 +169,29 @@ frontend:
           agent: "main"
           comment: "Grid ve liste görünümlerinde barkod ve açıklama alanları tıklanabilir yapıldı. Resim olmasa bile barkod veya açıklamaya tıklayınca openProductDetail fonksiyonu çağrılıyor ve ürün detay pop-up açılıyor. Hover efektleri eklendi."
 
-  - task: "Word İndirme Kaldırılması"
+  - task: "PDF İndirme Hatası Düzeltmesi"
     implemented: true
     working: true
     file: "frontend/src/pages/Reports.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
         - working: true
           agent: "main"
-          comment: "exportToWord fonksiyonu tamamen kaldırıldı. Tüm Word indirme butonları (Stok Raporu, En Çok Satanlar, En Karlılar sayfalarından) silindi. docx ve file-saver import'ları kaldırıldı. Sadece PDF, Excel ve TXT indirme seçenekleri kaldı."
+          comment: "ARALIK 2025 - PDF indirme hatası (doc.autoTable is not a function) düzeltildi. Import yöntemi değiştirildi: 'import jsPDF from jspdf' yerine 'import { jsPDF } from jspdf' kullanıldı. Ayrıca 'import autoTable from jspdf-autotable' eklendi ve autoTable kullanımı doc.autoTable() yerine autoTable(doc, {...}) şeklinde düzeltildi. PDF export fonksiyonu artık doğru çalışıyor."
+  
+  - task: "Raporlar Sekmesi Yetkilendirme"
+    implemented: true
+    working: true
+    file: "frontend/src/components/Layout.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "ARALIK 2025 - Raporlar sekmesi sadece yönetici rolündeki kullanıcılar için görünür hale getirildi. Layout.js'te navItems array'ine 'adminOnly: true' flag'i eklendi. filteredNavItems oluşturuldu ve user?.role === 'yönetici' kontrolü ile menü filtreleniyor. Hem desktop hem mobil menülerde uygulandı. Depo ve satış rolündeki kullanıcılar artık Raporlar sekmesini görmüyor."
 
   - task: "Etkinlik Detayında Düzenleme Butonu"
     implemented: true
