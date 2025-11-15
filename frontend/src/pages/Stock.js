@@ -1253,11 +1253,17 @@ function Stock() {
                             ₺{result.price.toFixed(2)}
                           </p>
                           <a
-                            href={result.url}
+                            href={result.url || '#'}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={(e) => {
+                              e.preventDefault();
                               e.stopPropagation();
+                              if (result.url && result.url !== '#') {
+                                window.open(result.url, '_blank', 'noopener,noreferrer');
+                              } else {
+                                toast.error('Ürün linki bulunamadı');
+                              }
                             }}
                             className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3 text-blue-600 hover:text-blue-800 whitespace-nowrap"
                           >
