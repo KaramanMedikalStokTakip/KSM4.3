@@ -180,6 +180,21 @@ frontend:
         - working: true
           agent: "main"
           comment: "ARALIK 2025 - PDF indirme hatası (doc.autoTable is not a function) düzeltildi. Import yöntemi değiştirildi: 'import jsPDF from jspdf' yerine 'import { jsPDF } from jspdf' kullanıldı. Ayrıca 'import autoTable from jspdf-autotable' eklendi ve autoTable kullanımı doc.autoTable() yerine autoTable(doc, {...}) şeklinde düzeltildi. PDF export fonksiyonu artık doğru çalışıyor."
+        - working: true
+          agent: "main"
+          comment: "ARALIK 2025 - PDF Türkçe Karakter Desteği: turkishToPdfText fonksiyonu eklendi. Türkçe karakterler (ç, ğ, ı, ö, ş, ü) PDF uyumlu karakterlere dönüştürülüyor. Başlık, tablo başlıkları ve tüm değerler bu fonksiyondan geçiyor. Artık PDF'lerde Türkçe karakter sorunu yok."
+  
+  - task: "Fiyat Karşılaştırma Siteye Git Butonu"
+    implemented: true
+    working: true
+    file: "frontend/src/pages/Stock.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "ARALIK 2025 - Fiyat karşılaştırması dialogundaki 'Siteye Git' butonu düzeltildi. e.preventDefault() eklendi ve window.open() ile doğru URL yeni sekmede açılıyor. URL kontrolü eklendi, boş URL'ler için hata mesajı gösteriliyor."
   
   - task: "Raporlar Sekmesi Yetkilendirme"
     implemented: true
