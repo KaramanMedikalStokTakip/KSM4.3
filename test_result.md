@@ -105,20 +105,17 @@
 user_problem_statement: "YENİ DÜZENLEMELER (Aralık 2025): 1) PDF dosya indirme hatası düzeltmesi (doc.autoTable is not a function), 2) Yönetici harici kullanıcılara Raporlar sekmesi görünmesin, 3) Manuel test için stok, müşteri ve etkinlik kısımlarına 5'er adet örnek veri eklenmesi"
 
 backend:
-  - task: "Test Verileri Seed Endpoint"
+  - task: "Test Verileri Manuel Ekleme"
     implemented: true
     working: true
-    file: "backend/server.py"
+    file: "backend/add_test_data.py"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
-        - working: "NA"
-          agent: "main"
-          comment: "POST /api/admin/seed-test-data endpoint'i eklendi. Sadece yönetici erişebilir. 5 medikal ürün (Dijital Tansiyon Aleti, İnfrared Ateş Ölçer, Steril Eldiven, Nebulizatör, Kan Şekeri Test Çubuğu), 5 müşteri (Ayşe Yılmaz, Mehmet Demir, Fatma Şahin, Ali Kara, Zeynep Arslan), 5 etkinlik (Stok Sayımı, Tedarikçi Toplantısı, Fiyat Güncellemesi, Müşteri Ziyareti, Ürün Eğitimi) ekliyor. Ürünlerden bazıları düşük stokta."
         - working: true
-          agent: "testing"
-          comment: "✅ BACKEND TEST COMPLETE (14 Nov 2025): POST /api/admin/seed-test-data endpoint fully functional. Admin-only access correctly enforced (403 for non-admin, 200 for admin). Successfully seeds exactly 5 medical products (Dijital Tansiyon Aleti, İnfrared Ateş Ölçer, Steril Eldiven, Nebulizatör Cihazı, Kan Şekeri Test Çubuğu), 5 customers (Ayşe Yılmaz, Mehmet Demir, Fatma Şahin, Ali Kara, Zeynep Arslan), and 5 calendar events (Stok Sayımı, Tedarikçi Toplantısı, Fiyat Güncellemesi, Müşteri Ziyareti, Ürün Eğitimi). All data properly inserted into database and retrievable via respective GET endpoints. Test data includes medical devices and supplies with proper categorization."
+          agent: "main"
+          comment: "ARALIK 2025 - Manuel test için direkt veritabanına Python script ile test verileri eklendi. Script: backend/add_test_data.py. 5 medikal ürün (Dijital Tansiyon Aleti, İnfrared Ateş Ölçer, Steril Eldiven Lateks, Nebulizatör Cihazı, Kan Şekeri Test Çubuğu) - bazıları düşük stokta, 5 müşteri (Ayşe Yılmaz, Mehmet Demir, Fatma Şahin, Ali Kara, Zeynep Arslan), 5 etkinlik (Stok Sayımı, Tedarikçi Toplantısı, Fiyat Güncellemesi, Müşteri Ziyareti, Ürün Eğitimi) başarıyla MongoDB'ye eklendi. Script çalıştırıldı ve veriler doğrulandı."
 
   - task: "Kullanıcı Düzenleme Endpoint"
     implemented: true
