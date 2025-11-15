@@ -261,7 +261,7 @@ function Reports() {
       const headers = Object.keys(data[0] || {});
       const rows = data.map(item => Object.values(item));
       
-      doc.autoTable({
+      autoTable(doc, {
         head: [headers],
         body: rows,
         startY: 30,
